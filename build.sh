@@ -1,0 +1,1 @@
+dotnet publish Sample -c Release --self-contained -r "win10-x64" -p:PublishSingleFile=true

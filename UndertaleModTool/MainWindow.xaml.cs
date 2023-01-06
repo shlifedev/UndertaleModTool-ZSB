@@ -3747,6 +3747,11 @@ result in loss of work.");
         {
             Tab.SetTabTitleBinding(null, null, sender as TextBlock);
         }
+
+        private void RootScriptItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
     public class GeneralInfoEditor
