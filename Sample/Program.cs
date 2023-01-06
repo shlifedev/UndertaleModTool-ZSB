@@ -3,100 +3,48 @@ using UndertaleModLib;
 using UndertaleModLib.Models;
 using UndertaleModLib.Compiler;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Text.Json.Serialization;
 
-public class GameString
-{ 
-    public string original = "";
-    public string translate = "";
-
-    public GameString(string original, string translate)
-    {
-        this.original = original;
-        this.translate = translate;
-    }
-}
- 
 public static class Program
 {
     public static UndertaleData data;
     public static string GameExePath => "./Game/ZERO Sievert.exe";
     public static string GamePath => "./Game/";
-    public static string GameArgs => "-game ./Game/data.win";
+    public static string GameArgs => "-game ./Game/Test.bin"; 
 
-    private static Regex regexVersionCheck = new Regex("\\d+(?:\\.\\d+)+");
+    
     static void Main(string[] args)
     {
         var skipCreatePatch = args.Where(x => x == "--skip").FirstOrDefault() != null;
-
+        Console.WriteLine("원본 파일 로드중..");
+        data = ReadDataFile(new FileInfo(@"C:\Users\jsh\UndertaleModTool-ZSB\Sample\bin\Debug\net6.0-windows\Game\data.win"));
 
         if (!skipCreatePatch)
-        {
-            Console.WriteLine("원본 파일 로드중..");
-            LoadData();
+        { 
+            data = ReadDataFile(new FileInfo(@"C:\Users\jsh\UndertaleModTool-ZSB\Sample\bin\Debug\net6.0-windows\Game\data.win"));
             Console.WriteLine("한글패치 적용 임시 모드파일 생성중..");
-            // 적용플로우
-            CreateModdedData();
+            var patcher = new Patcher(data, "translated.json");
+            patcher.Patch();
+            patcher.Save("./Game/Test.bin");
         }
         else
         {
             Console.WriteLine("패치 생성이 스킵되었습니다.");
         }
 
-        
+
         Console.WriteLine("게임 실행..");
         StartGame();
     }
-    static void LoadData()
-    { 
-        data = ReadDataFile(new FileInfo(@"C:\Users\jsh\UndertaleModTool-ZSB\Sample\bin\Debug\net6.0-windows\Game\data.win"));
-    }
-    static void CreateModdedData()
-    { 
-        using FileStream fs = new FileInfo("./Game/Korean.win").OpenWrite(); 
-        UndertaleIO.Write(fs, data);
-    }
+
+ 
     static void StartGame()
     {
         Process.Start(GameExePath, GameArgs);
-    }
-    static void ExportString()
-    {
-        List<GameString> pureStrings = new List<GameString>();
-        List<GameString> maybeScripts = new List<GameString>();
+    } 
 
-        foreach (var str in data.Strings)
-        {
-            if (IsMaybePureString(str))
-            {
-                pureStrings.Add(new GameString(str.Content, str.Content)); 
-            }
-        }
-        var sorthByString = pureStrings.OrderBy(x => x.original);
-        string x = null;
-        string t2 = null;
-        foreach (var item in sorthByString)
-        {
-            x += item.original + "\n";
-            if (item.original.Length > 1)
-                if (item.original[item.original.Length - 1] == '.')
-                    t2 += item.original + "\n";
-        }
-        System.IO.File.WriteAllText("export.txt", x);
-        System.IO.File.WriteAllText("sc.txt", t2);
-    }
-
-    static void ImportString()
-    {
-        List<GameString> pureStrings = new List<GameString>();
-        foreach(var data in pureStrings)
-        {
-
-        }
-    }
 
     public static bool IsMaybePureString(UndertaleString str)
     { 
