@@ -18,8 +18,7 @@ public static class Program
     
     static void Main(string[] args)
     {
-        var patcher = new Patcher("./Game/data.win", "./localization/data.json", "./localization/font");
-            patcher.ApplyTranslate().End().Save("./localization/data.bin");
+        var patcher = new Patcher("./Game/data.win", "./localization/data.json", "./localization/font").ApplyFont().ApplyTranslate().Save("./localization/data.bin");
        
         Process.Start(GameExePath, GameArgs);
     }

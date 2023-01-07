@@ -7,6 +7,8 @@ using System.Text.Json.Nodes;
 using static UndertaleModLib.Compiler.Compiler.Lexer;
 using static UndertaleModLib.Models.UndertaleSequence;
 using System.Drawing;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 public class Patcher
 {
@@ -14,8 +16,7 @@ public class Patcher
     /// <summary>
     /// 중복 스트링이 있을 수 있으므로 리스트로 관리한다.
     /// </summary>
-    private Dictionary<string, List<UndertaleString>> hashedLocalDatas;
-    private string v;
+    private Dictionary<string, List<UndertaleString>> hashedLocalDatas; 
 
     public UndertaleData Data { get; set; }
     public string TranslateFilePath { get; }
@@ -41,7 +42,7 @@ public class Patcher
 
         Console.WriteLine("translated.json 분석중..");
         var content = System.IO.File.ReadAllText(translateFilePath);
-        var loadedGameStrings = JsonSerializer.Deserialize<List<GameString>>(content);
+        var loadedGameStrings = JsonConvert.DeserializeObject<List<GameString>>(content);
         translateData = new Dictionary<string, GameString>();
         if (loadedGameStrings != null)
         { 
@@ -93,11 +94,22 @@ public class Patcher
         var fontYYFiles = fontDir.GetFiles("*.yy");
         var fontTextureFiles = fontDir.GetFiles("*.png");
 
-        for(int i = 0;  i< fontYYFiles.Count(); i++)
-        { 
-            JsonObject yyData = null;
-            var yy = fontYYFiles[i];
-            var tex = fontTextureFiles[i];
+        for(int i = 0;  i< Data.Fonts.Count; i++)
+        {
+            JObject fontData = null;
+            var font = Data.Fonts[i];
+
+            var yy = fontYYFiles[0];
+            var tex = fontTextureFiles[0];
+
+            using (StreamReader file = File.OpenText(yy.FullName))
+            {
+                using (JsonTextReader reader = new JsonTextReader(file))
+                {
+                    fontData = (JObject)JToken.ReadFrom(reader);
+                }
+            }
+             
 
             //텍스쳐 생성
             Bitmap bitmap = new Bitmap(tex.FullName);
@@ -121,11 +133,74 @@ public class Patcher
             texturePageItem.BoundingWidth = (ushort)bitmap.Width;
             texturePageItem.BoundingHeight = (ushort)bitmap.Height;
             Data.TexturePageItems.Add(texturePageItem);
+          
+            font.Texture = texturePageItem;
+            font.Glyphs.Clear();
+            font.DisplayName = Data.Strings.MakeString((string)fontData["fontName"]);
+            font.EmSize = (uint)fontData["size"];
+            font.Bold = (bool)fontData["bold"];
+            font.Italic = (bool)fontData["italic"];
+            font.Charset = (byte)fontData["charset"];
+            font.AntiAliasing = (byte)fontData["AntiAlias"];
 
+            font.ScaleX = 1;
+            font.ScaleY = 1;
+            if (fontData.ContainsKey("ascender"))
+                font.Ascender = (uint)fontData["ascender"];
+            if (fontData.ContainsKey("ascenderOffset"))
+                font.AscenderOffset = (int)fontData["ascenderOffset"];
 
+            font.RangeStart = 0;
+            font.RangeEnd = 0;
+
+            foreach (JObject range in fontData["ranges"].Values<JObject>())
+            {
+                var rangeStart = (ushort)range["lower"];
+                var rangeEnd = (uint)range["upper"];
+                if (font.RangeStart > rangeStart)
+                    font.RangeStart = rangeStart;
+                if (font.RangeEnd > rangeEnd)
+                    font.RangeEnd = rangeEnd;
+            }
+
+            foreach (KeyValuePair<string, JToken> glyphMeta in (JObject)fontData["glyphs"])
+            {
+                var glyph = (JObject)glyphMeta.Value;
+                font.Glyphs.Add(new UndertaleFont.Glyph()
+                {
+                    Character = (ushort)glyph["character"],
+                    SourceX = (ushort)glyph["x"],
+                    SourceY = (ushort)glyph["y"],
+                    SourceWidth = (ushort)glyph["w"],
+                    SourceHeight = (ushort)glyph["h"],
+                    Shift = (short)glyph["shift"],
+                    Offset = (short)glyph["offset"],
+                });
+            }
+
+            List<UndertaleFont.Glyph> glyphs = font.Glyphs.ToList();
+
+            // I'm literally going to LINQ 100000 times
+            // and you can't stop me
+            foreach (JObject kerningPair in fontData["kerningPairs"].Values<JObject>())
+            {
+                var first = (ushort)kerningPair["first"];
+                var glyph = glyphs.Find(x => x.Character == first);
+                glyph.Kerning.Add(new UndertaleFont.Glyph.GlyphKerning()
+                {
+                    Other = (short)kerningPair["second"],
+                    Amount = (short)kerningPair["amount"],
+                });
+            }
+            // Sort glyphs like in UndertaleFontEditor to be safe
+            glyphs.Sort((x, y) => x.Character.CompareTo(y.Character));
+            font.Glyphs.Clear();
+
+            foreach (UndertaleFont.Glyph glyph in glyphs)
+                font.Glyphs.Add(glyph);
         }
 
-         
+
         return this;
     }
     public Patcher End() => this;
