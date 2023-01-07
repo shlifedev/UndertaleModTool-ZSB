@@ -23,9 +23,9 @@ public class Patcher
     public string TranslateFilePath { get; }
     public string FontPath { get; }
 
-    public Dictionary<string, UndertaleTexturePageItem> fontTextureMap = new Dictionary<string, UndertaleTexturePageItem>();
-    public Dictionary<string, JObject> fontYYInfoMap = new Dictionary<string, JObject>();
-
+    private Dictionary<string, UndertaleTexturePageItem> _fontTextureMap = new Dictionary<string, UndertaleTexturePageItem>();
+    private Dictionary<string, JObject> _fontYYInfoMap = new Dictionary<string, JObject>();
+     
     UndertaleData ReadDataFile(FileInfo datafile)
     {
         try
@@ -39,6 +39,9 @@ public class Patcher
             throw new FileNotFoundException($"Data file '{e.FileName}' does not exist");
         }
     }
+    /// <summary>
+    /// 번역데이터를 외부로 내보낼때 스트링이 순수한 번역데이터인지 확인한다.
+    /// </summary> 
     bool IsMaybePureString(UndertaleString str)
     {
 
@@ -76,6 +79,7 @@ public class Patcher
             str.Content.StartsWith("float4") == false
         );
     }
+
     public Patcher ExportStrings(string savePath)
     {
         List<GameString> strings = new List<GameString>();
@@ -91,6 +95,14 @@ public class Patcher
         System.IO.File.WriteAllText(savePath, content);
         return this;
     }
+
+    /// <summary>
+    /// 패쳐 생성
+    /// </summary>
+    /// <param name="dataFilePath">원본 data.win 절대 경로</param>
+    /// <param name="translateFilePath">번역 파일 절대 경로</param>
+    /// <param name="fontPath">폰트 파일의 절대 경로 (폴더 위치)</param>
+    /// <exception cref="Exception"></exception>
     public Patcher(string dataFilePath, string translateFilePath, string fontPath)
     {
         Console.WriteLine("원본파일 읽는중...");
@@ -129,21 +141,18 @@ public class Patcher
     public Patcher ApplyTranslate()
     {
         Console.WriteLine("번역데이터를 게임컨텐츠에 수정중..");
-        foreach (var gameString in Data.Strings)
+        foreach (var localString in Data.Strings)
         {
-            var localHash = CreateMD5(gameString.Content);
-
-            if (localHash == "6ADBB6B1451B2167F10AF096AE72DC0C")
-            {
-                Console.WriteLine("먀옹");
-            }
+            // 로컬 스트링의 해시를 읽는다.
+            var localHash = CreateMD5(localString.Content); 
+            // 게임 로컬스트링이 번역파일 해시에 존재하는경우 스트링을 갈아끼운다.
             if (translateData.ContainsKey(localHash))
             {
                 // 게임 실제 패치플로우
                 string content = "";
-                content = translateData[localHash].ko;
-                Console.WriteLine("기존" + gameString.Content + "를 " + content + "로 수정중");
-                gameString.Content = content;
+                content = translateData[localHash].ko;  
+                Console.WriteLine($"[Load Localization] {localString.Content} Change To {content}");
+                localString.Content = content;
             }
         }
         return this;
@@ -152,7 +161,7 @@ public class Patcher
 
     private UndertaleTexturePageItem LoadFontTexture(string fontName)
     {
-        if (fontTextureMap.ContainsKey(fontName)) return fontTextureMap[fontName];
+        if (_fontTextureMap.ContainsKey(fontName)) return _fontTextureMap[fontName];
         // ./localization/font
         var fontDir = new DirectoryInfo(FontPath);
         var png = new FileInfo(Path.Combine(FontPath, fontName+".png"));
@@ -178,15 +187,15 @@ public class Patcher
         texturePageItem.BoundingWidth = (ushort)bitmap.Width;
         texturePageItem.BoundingHeight = (ushort)bitmap.Height;
         Data.TexturePageItems.Add(texturePageItem);
-        fontTextureMap.Add(fontName, texturePageItem);
+        _fontTextureMap.Add(fontName, texturePageItem);
 
         return texturePageItem;
     }
     private JObject LoadFontData(string fontName)
     {
-        if (fontYYInfoMap.ContainsKey(fontName))
+        if (_fontYYInfoMap.ContainsKey(fontName))
         {
-            return fontYYInfoMap[fontName];
+            return _fontYYInfoMap[fontName];
         }
         var yy = new FileInfo(Path.Combine(FontPath, fontName+".yy"));
         JObject fontData = null;
@@ -198,7 +207,7 @@ public class Patcher
             }
         }
         if (fontData == null) throw new Exception($"{FontPath}/{fontName}의 font data를 읽을 수 없습니다.");
-        fontYYInfoMap.Add(fontName, fontData);
+        _fontYYInfoMap.Add(fontName, fontData);
 
         return fontData;
     }
@@ -227,17 +236,9 @@ public class Patcher
         if (fontData.ContainsKey("ascender"))
             font.Ascender = (uint)fontData["ascender"];
         if (fontData.ContainsKey("ascenderOffset"))
-            font.AscenderOffset = (int)fontData["ascenderOffset"];
-
-
+            font.AscenderOffset = (int)fontData["ascenderOffset"]; 
         font.RangeStart = 0;
-        font.RangeEnd = 0;
-
-
-
-
-        font.RangeStart = 0;
-        font.RangeEnd = 0;
+        font.RangeEnd = 0; 
 
         foreach (JObject range in fontData["ranges"].Values<JObject>())
         {

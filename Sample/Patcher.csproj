@@ -19,4 +19,8 @@
     <ProjectReference Include="..\UndertaleModLib\UndertaleModLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="localization\" />
+  </ItemGroup>
+
 </Project>

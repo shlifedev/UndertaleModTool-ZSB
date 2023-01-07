@@ -32,6 +32,7 @@ public static class Program
     static void Main(string[] args)
     {
         GameRootPath = "Game";
+
         if (args.Length == 0)
         {
             while (true)
