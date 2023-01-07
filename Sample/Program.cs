@@ -33,7 +33,7 @@ public static class Program
     {
         GameRootPath = ".";
 
-        if (!new FileInfo(GameExePath).Exists)
+        while (!new FileInfo(GameExePath).Exists)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"[!] {GameRootPath}에서 ZERO Sievert.exe 를 찾을 수 없습니다. 게임 경로(폴더)를 직접 입력하세요");
