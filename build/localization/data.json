@@ -669,37 +669,37 @@
     "hash": "01C459EE4DE8922CC573EC340B640B3F",
     "origin": "You already have this quest!",
     "autoTranslate": "You already have this quest!",
-    "ko": "You already have this quest!"
+    "ko": "당신은 이미 이 퀘스트를 받았습니다!"
   },
   {
     "hash": "110FC09A70FF5861CBEC0549EB7A07F1",
     "origin": " Roubles / ",
     "autoTranslate": " Roubles / ",
-    "ko": " Roubles / "
+    "ko": " 루블 / "
   },
   {
     "hash": "1AEFE5C3D9DFEF887E665241971036AF",
     "origin": " Experience",
     "autoTranslate": " Experience",
-    "ko": " Experience"
+    "ko": " 경험치"
   },
   {
     "hash": "FBF421CD84B85AAB8085746488D1C6F9",
     "origin": "You have to choose an item!",
     "autoTranslate": "You have to choose an item!",
-    "ko": "You have to choose an item!"
+    "ko": "보상 아이템을 선택해야 합니다!"
   },
   {
     "hash": "006AA963FE0BEB632C1540ADEB542280",
     "origin": "You have not completed this task yet!",
     "autoTranslate": "You have not completed this task yet!",
-    "ko": "You have not completed this task yet!"
+    "ko": "아직 이 테스크를 완료하지 않았습니다!"
   },
   {
     "hash": "684DB60C5237F632C7CE8C0F83314711",
     "origin": "The handguard is too long for this barrel",
     "autoTranslate": "The handguard is too long for this barrel",
-    "ko": "The handguard is too long for this barrel"
+    "ko": "핸드가드가 배럴에 비해서 너무 깁니다."
   },
   {
     "hash": "9AECF5C5D94AE483EC4DCB1FC2B29138",
@@ -717,7 +717,7 @@
     "hash": "29861030ADDB0AD8D824E5F57C7375BF",
     "origin": "You can't use this book yet: no specialisation found",
     "autoTranslate": "You can't use this book yet: no specialisation found",
-    "ko": "You can't use this book yet: no specialisation found"
+    "ko": "아직 이 책을 읽을 수 없습니다. no specialisation found"
   },
   {
     "hash": "336D5EBC5436534E61D16E63DDFCA327",
@@ -747,25 +747,25 @@
     "hash": "E33C2DAB015F8CDFB46CDA051C8A2BDC",
     "origin": "has been added to your inventory",
     "autoTranslate": "has been added to your inventory",
-    "ko": "has been added to your inventory"
+    "ko": "인벤토리에 추가되었습니다."
   },
   {
     "hash": "76350B55AD2E3E7CB2C29B23A6D4D6B6",
     "origin": "The Forest",
     "autoTranslate": "The Forest",
-    "ko": "The Forest"
+    "ko": "숲"
   },
   {
     "hash": "F9C14DE0D97EC9C2BAFA34671FDA9C7A",
     "origin": "Forest located on the edge of the Zone, suitable for anyone who wants to take a 'quiet' walk.\nThis place has not been very affected by radiation, the vegetation is still lush and the fauna has not changed.\nBe careful though, this makes it the perfect place for bandit camps. When the nuclear power plant exploded, most of the wild animals took refuge in this forest. You'd better bring a shotgun with you.\nGood luck!",
     "autoTranslate": "Forest located on the edge of the Zone, suitable for anyone who wants to take a 'quiet' walk.\nThis place has not been very affected by radiation, the vegetation is still lush and the fauna has not changed.\nBe careful though, this makes it the perfect place for bandit camps. When the nuclear power plant exploded, most of the wild animals took refuge in this forest. You'd better bring a shotgun with you.\nGood luck!",
-    "ko": "Forest located on the edge of the Zone, suitable for anyone who wants to take a 'quiet' walk.\nThis place has not been very affected by radiation, the vegetation is still lush and the fauna has not changed.\nBe careful though, this makes it the perfect place for bandit camps. When the nuclear power plant exploded, most of the wild animals took refuge in this forest. You'd better bring a shotgun with you.\nGood luck!"
+    "ko": "원자력 발전소가 폭발했을때 야생동물들이 이 숲으로 피신했습니다. \n숲은 방사능의 영향을 많이 받지 않았고 나무나 풀, 동물들을 쉽게 볼 수 있습니다. 따라서, 숲은 조용한 산책을 원하는 사람들에게 적합합니다. 하지만 그 곳에는 밴딧들이 있으니 경계심을 낮추지 마세요!"
   },
   {
     "hash": "98FBB02BF5444F894351CE6EA240A010",
     "origin": "Makeshift Camp",
     "autoTranslate": "Makeshift Camp",
-    "ko": "Makeshift Camp"
+    "ko": "임시 캠프"
   },
   {
     "hash": "B5A7ADDE1AF5C87D7FD797B6245C2A39",
@@ -801,7 +801,7 @@
     "hash": "338C6A69CBEC3E73E18DB825E5579E97",
     "origin": "Zakov",
     "autoTranslate": "Zakov",
-    "ko": "Zakov"
+    "ko": "자코브"
   },
   {
     "hash": "6716F7B580D45EC74B98C7A46C782A78",
@@ -813,103 +813,103 @@
     "hash": "D81A5F0B109F939FD47A3AFC5A23D3F2",
     "origin": "bandit ",
     "autoTranslate": "bandit ",
-    "ko": "bandit "
+    "ko": "벤딧 "
   },
   {
     "hash": "8076BFE9AC7B3F68C7D83041550AA42D",
     "origin": "Lazar's guard",
     "autoTranslate": "Lazar's guard",
-    "ko": "Lazar's guard"
+    "ko": "레이저의 경비대"
   },
   {
     "hash": "315E518FFFCCB680AF14CDFB4FB79A97",
     "origin": "Lazar",
     "autoTranslate": "Lazar",
-    "ko": "Lazar"
+    "ko": "레이저"
   },
   {
     "hash": "8B69AE16F56529A6FBB880136F706D1D",
     "origin": "Arman",
     "autoTranslate": "Arman",
-    "ko": "Arman"
+    "ko": "아르만"
   },
   {
     "hash": "A4495156FBC919C368693380AA6A96A5",
     "origin": "Kibba",
     "autoTranslate": "Kibba",
-    "ko": "Kibba"
+    "ko": "키바"
   },
   {
     "hash": "D0AD429F97025ABB06712C4B58FAA12D",
     "origin": "Hunter ",
     "autoTranslate": "Hunter ",
-    "ko": "Hunter "
+    "ko": "헌터 "
   },
   {
     "hash": "7936577A7788D7BA051DED07BBCFFB57",
     "origin": "Soldier ",
     "autoTranslate": "Soldier ",
-    "ko": "Soldier "
+    "ko": "솔져 "
   },
   {
     "hash": "C18887E895C1C9D7214C6F73E696572D",
     "origin": "Captain ",
     "autoTranslate": "Captain ",
-    "ko": "Captain "
+    "ko": "캡틴 "
   },
   {
     "hash": "9C6D3DFE9962FE9AD22A22C2534329DB",
     "origin": "Crimson ",
     "autoTranslate": "Crimson ",
-    "ko": "Crimson "
+    "ko": "크림슨 "
   },
   {
     "hash": "DD463F9C83337BFFDC8ACC66ED73726D",
     "origin": "Mercenary ",
     "autoTranslate": "Mercenary ",
-    "ko": "Mercenary "
+    "ko": "용병 "
   },
   {
     "hash": "1D5209A251AE4A4FD98B3D8060C46085",
     "origin": "scientist ",
     "autoTranslate": "scientist ",
-    "ko": "scientist "
+    "ko": "과학자 "
   },
   {
     "hash": "3518DCD29A3519C43E501D89FB781F82",
     "origin": "chief scientist Isaak Fedorov",
     "autoTranslate": "chief scientist Isaak Fedorov",
-    "ko": "chief scientist Isaak Fedorov"
+    "ko": "수석 과학자 아이작 페도로브"
   },
   {
     "hash": "88183B946CC5F0E8C96B2E66E1C74A7E",
     "origin": "Unknown",
     "autoTranslate": "Unknown",
-    "ko": "Unknown"
+    "ko": "알 수 없음"
   },
   {
     "hash": "7C3D115A77FD8D39FBBC0BB2BF54CFC7",
     "origin": "Zombie",
     "autoTranslate": "Zombie",
-    "ko": "Zombie"
+    "ko": "좀비"
   },
   {
     "hash": "279EDE0C6BDBD7D26309BECD159053D8",
     "origin": "Wolf",
     "autoTranslate": "Wolf",
-    "ko": "Wolf"
+    "ko": "늑대"
   },
   {
     "hash": "65FA18D1E48EB9BF8844DF126D662FC0",
     "origin": "ghoul",
     "autoTranslate": "ghoul",
-    "ko": "ghoul"
+    "ko": "구울"
   },
   {
     "hash": "40652EE9AE143F1C1C830F01A5449ECB",
     "origin": "blink",
     "autoTranslate": "blink",
-    "ko": "blink"
+    "ko": "블링크"
   },
   {
     "hash": "D861877DA56B8B4CEB35C8CBFDF65BB4",
@@ -921,19 +921,19 @@
     "hash": "ECD331596F91DDAAC07C6E600ED166F1",
     "origin": "Rat",
     "autoTranslate": "Rat",
-    "ko": "Rat"
+    "ko": "쥐"
   },
   {
     "hash": "44C3E4512DA56B3D4273F5AAB5409F6E",
     "origin": "Boar",
     "autoTranslate": "Boar",
-    "ko": "Boar"
+    "ko": "멧돼지"
   },
   {
     "hash": "BF4755B381AD8BBA3A505D35C0BAD266",
     "origin": "Mutated Boar",
     "autoTranslate": "Mutated Boar",
-    "ko": "Mutated Boar"
+    "ko": "감연된 멧돼지"
   },
   {
     "hash": "299A20601891812EFF26320B63F3B4FE",
@@ -5715,13 +5715,13 @@
     "hash": "2032105E32DCBBEE8169563812D6706F",
     "origin": "Priviet comrade! How can I help you?",
     "autoTranslate": "Priviet comrade! How can I help you?",
-    "ko": "Priviet comrade! How can I help you?"
+    "ko": "Priviet comrade!  어떻게 도와드릴까요?"
   },
   {
     "hash": "B665D826E919381052EC23B9EAEC3B62",
     "origin": "Bye",
     "autoTranslate": "Bye",
-    "ko": "Bye"
+    "ko": "다음에 봐요."
   },
   {
     "hash": "7EC42FFE8798D1755EF29FEEFA608B5C",
@@ -5733,7 +5733,7 @@
     "hash": "EAEB30F9F18E0C50B178676F3EAEF45F",
     "origin": "Task",
     "autoTranslate": "Task",
-    "ko": "Task"
+    "ko": "테스크"
   },
   {
     "hash": "03D9A0C57423830F12018AEDFB6FB3F1",
@@ -5973,7 +5973,7 @@
     "hash": "F0FBA5CDEBFB4D3B23E8D76619F7ABFA",
     "origin": "Tell me something",
     "autoTranslate": "Tell me something",
-    "ko": "Tell me something"
+    "ko": "묻고 싶은게 있어요."
   },
   {
     "hash": "CB24328A1C557858B2B2FC4C210962DB",
@@ -6375,61 +6375,61 @@
     "hash": "BFCDCBA667F26AF4ED4438352630B58E",
     "origin": "Damn! These poor guys",
     "autoTranslate": "Damn! These poor guys",
-    "ko": "Damn! These poor guys"
+    "ko": "젠장, 이 불쌍한 놈들."
   },
   {
     "hash": "FA692D85F08C92A585ED8B3FED7F1D52",
     "origin": "What happened?",
     "autoTranslate": "What happened?",
-    "ko": "What happened?"
+    "ko": "무슨일이에요?"
   },
   {
     "hash": "35C5B7C744E5E9398D30D72D99F9029A",
     "origin": "Recently helicopters have crashed near the swamp, these are the bodies of the crew...\nMy God what happened to them?!?!?\nGo talk to the doctor. Maybe he can tell you more.",
     "autoTranslate": "Recently helicopters have crashed near the swamp, these are the bodies of the crew...\nMy God what happened to them?!?!?\nGo talk to the doctor. Maybe he can tell you more.",
-    "ko": "Recently helicopters have crashed near the swamp, these are the bodies of the crew...\nMy God what happened to them?!?!?\nGo talk to the doctor. Maybe he can tell you more."
+    "ko": "최근에 헬기가 늪 근처에 추락했어요.\n 이들은 승무원들의 시신입니다. \n 이럴수가.. 그들에게 무슨일이 있었던거죠? \n 가서 닥터와 이야기해보세요. 그가 더 많은걸 이야기 해줄 수 있을거에요."
   },
   {
     "hash": "181FF5EB6D184D261D6B28480110E599",
     "origin": "Markus",
     "autoTranslate": "Markus",
-    "ko": "Markus"
+    "ko": "마커스"
   },
   {
     "hash": "6AE99D4D2DE5E3CBD29FEC87AE7D76EB",
     "origin": "Hey!",
     "autoTranslate": "Hey!",
-    "ko": "Hey!"
+    "ko": "이봐요!"
   },
   {
     "hash": "1A0E0FFDE635CBF6201BE0066B6BDC86",
     "origin": "What are you doing out here?",
     "autoTranslate": "What are you doing out here?",
-    "ko": "What are you doing out here?"
+    "ko": "여기서 뭐해요?"
   },
   {
     "hash": "662E458721D4BCD420F4970EF134466A",
     "origin": "Nothing in particular, some days I need to get fresh air.\nLiving in the bunker all the time is not easy.",
     "autoTranslate": "Nothing in particular, some days I need to get fresh air.\nLiving in the bunker all the time is not easy.",
-    "ko": "Nothing in particular, some days I need to get fresh air.\nLiving in the bunker all the time is not easy."
+    "ko": "뭐 그냥.. 가끔 신선한 공기를 마시고 싶을때가 많으니.. \n 항상 여기서 생활하는게 쉽지 않아요."
   },
   {
     "hash": "48A74DF2899D807724F7B12285C7F3FF",
     "origin": "This is none of your business, Hunter.",
     "autoTranslate": "This is none of your business, Hunter.",
-    "ko": "This is none of your business, Hunter."
+    "ko": "헌터, 당신이 상관할바가 아니에요."
   },
   {
     "hash": "0298B12AC978AE04FAA5997CC5A9F46B",
     "origin": "Just chilling, drinking vodka, smoking cigarettes.\nThat's all.",
     "autoTranslate": "Just chilling, drinking vodka, smoking cigarettes.\nThat's all.",
-    "ko": "Just chilling, drinking vodka, smoking cigarettes.\nThat's all."
+    "ko": "그저 놀고, 술 마시고, 담배 피고. \n 뭐.. 그게 다에요."
   },
   {
     "hash": "9E82B230626A028470F106C759DD7DBA",
     "origin": "Aren't you scared to be out here?",
     "autoTranslate": "Aren't you scared to be out here?",
-    "ko": "Aren't you scared to be out here?"
+    "ko": "당신은 밖에 나와 있는게 두렵지 않나요?"
   },
   {
     "hash": "8B05F947ED06F229E16178044F1DDFF0",
@@ -6507,43 +6507,43 @@
     "hash": "DF247B809C87694737FBE8296F9A713A",
     "origin": "In the forest you will find mainly bandits and wild animals, in the center there was an inhabited village but a few weeks ago the bandits arrived, the few survivors took refuge here.\nThere is an old abandoned sawmill, also occupied by bandits.\nThe Green Army has an outpost in the forest, they won't attack you right away but make sure not to provoke them.",
     "autoTranslate": "In the forest you will find mainly bandits and wild animals, in the center there was an inhabited village but a few weeks ago the bandits arrived, the few survivors took refuge here.\nThere is an old abandoned sawmill, also occupied by bandits.\nThe Green Army has an outpost in the forest, they won't attack you right away but make sure not to provoke them.",
-    "ko": "In the forest you will find mainly bandits and wild animals, in the center there was an inhabited village but a few weeks ago the bandits arrived, the few survivors took refuge here.\nThere is an old abandoned sawmill, also occupied by bandits.\nThe Green Army has an outpost in the forest, they won't attack you right away but make sure not to provoke them."
+    "ko": "숲에는 주로 밴딧, 야생 동물이 있고 중앙에는 생존자 마을이 있었지만 밴딧들이 점령했습니다. \n 밴딧들이 점령한 제재소도 있습니다. \n 그린아미의 전초기지도 있습니다. 그린아미는 당신을 바로 공격하지 않지만 자극하지 않도록 주의하세요."
   },
   {
     "hash": "24C962D3C1984DAFE1481FEC01A18778",
     "origin": "Tell me more about The makeshift camp",
     "autoTranslate": "Tell me more about The makeshift camp",
-    "ko": "Tell me more about The makeshift camp"
+    "ko": "임시캠프에 대해 알려주세요"
   },
   {
     "hash": "6BBB81016DA9AB79AF3603B2D40B029F",
     "origin": "It's the area where most of the population was evacuated.\nToday there's no one... alive, just a few bandits.\nThe radiation level isn't high, but stay away from the clusters of cars you find, the radiation there skyrocket.",
     "autoTranslate": "It's the area where most of the population was evacuated.\nToday there's no one... alive, just a few bandits.\nThe radiation level isn't high, but stay away from the clusters of cars you find, the radiation there skyrocket.",
-    "ko": "It's the area where most of the population was evacuated.\nToday there's no one... alive, just a few bandits.\nThe radiation level isn't high, but stay away from the clusters of cars you find, the radiation there skyrocket."
+    "ko": "그곳으로 많은 사람들이 대피했지만 산적 몇명을 제외하고는 다 죽었습니다. \n 방사능수치가 높지는 않지만 차량이 몰려있는 곳은 방사능 수치가 높으니 주의해야합니다."
   },
   {
     "hash": "2C4BF601E6D1FE73BA066A84FB3A5952",
     "origin": "Tell me more about The industrial area",
     "autoTranslate": "Tell me more about The industrial area",
-    "ko": "Tell me more about The industrial area"
+    "ko": "산업단지에 대해 더 말해주세요"
   },
   {
     "hash": "7C7D30F0BC5A68EC7278E0C368E7EBFD",
     "origin": "Is the area where Zakov's major industries used to be.\nIf you need any tools or electronic parts, that's the place. But be careful, there are more organized groups of bandits there.",
     "autoTranslate": "Is the area where Zakov's major industries used to be.\nIf you need any tools or electronic parts, that's the place. But be careful, there are more organized groups of bandits there.",
-    "ko": "Is the area where Zakov's major industries used to be.\nIf you need any tools or electronic parts, that's the place. But be careful, there are more organized groups of bandits there."
+    "ko": "자코프의 산업단지였습니다. \n도구나 전자부품을 얻고싶다면 그곳으로 가보세요, 하지만 그 곳에는 밴딧들이 있으니 조심하세요."
   },
   {
     "hash": "8F6B84B8E99B2AE14BC8F9F2894CB900",
     "origin": "Tell me more about other areas",
     "autoTranslate": "Tell me more about other areas",
-    "ko": "Tell me more about other areas"
+    "ko": "다른 지역에 대해 이야기해주세요."
   },
   {
     "hash": "A2E0B6A9E90DA46C08FB67DE1AE90DF0",
     "origin": "After the accident, I never ventured so far north. I don't know what's there now.\nThere used to be a swamp east of the industrial area.",
     "autoTranslate": "After the accident, I never ventured so far north. I don't know what's there now.\nThere used to be a swamp east of the industrial area.",
-    "ko": "After the accident, I never ventured so far north. I don't know what's there now.\nThere used to be a swamp east of the industrial area."
+    "ko": "폭발이후 난 북쪽으로 떠나본적이 없습니다. 지금은 어떤지 모르겠지만 예전에는 산업단지 동쪽에 늪이 있었습니다."
   },
   {
     "hash": "960F13DBDD8EF060CEA1FC4FA2AB0651",
@@ -6555,37 +6555,37 @@
     "hash": "CB34C9486C9B4F85EB9523B393C851D9",
     "origin": "I want to leave",
     "autoTranslate": "I want to leave",
-    "ko": "I want to leave"
+    "ko": "이 곳을 떠나고싶어요"
   },
   {
     "hash": "0BC53954033E3111FC333B7F22E1BFF8",
     "origin": "I was a conductor of Zakov's train station.\nAfter the explosion the green army asked me, or rather ordered me, to stay in Zakov.\nI have been a train conductor for 40 years and given my experience on these railroads they said I would be a useful element.",
     "autoTranslate": "I was a conductor of Zakov's train station.\nAfter the explosion the green army asked me, or rather ordered me, to stay in Zakov.\nI have been a train conductor for 40 years and given my experience on these railroads they said I would be a useful element.",
-    "ko": "I was a conductor of Zakov's train station.\nAfter the explosion the green army asked me, or rather ordered me, to stay in Zakov.\nI have been a train conductor for 40 years and given my experience on these railroads they said I would be a useful element."
+    "ko": "난 자코프의 기차장이었습니다. \n핵 폭발이 있었던 이후 그린아미는 내게 이 곳에 머물기를 요구했습니다.\n40년간 기차장으로 살았던 경험이 그들에게 도움이 될거라 생각했나봅니다."
   },
   {
     "hash": "51264CEF69CCB1237FC801168A0038AE",
     "origin": "How can I leave?",
     "autoTranslate": "How can I leave?",
-    "ko": "How can I leave?"
+    "ko": "이 곳을 떠나려면 어떻게해야하죠?"
   },
   {
     "hash": "72119327577F1F071D9CB130643E21D6",
     "origin": "I can carry you wherever you want.\nYou just have to pay a fee.",
     "autoTranslate": "I can carry you wherever you want.\nYou just have to pay a fee.",
-    "ko": "I can carry you wherever you want.\nYou just have to pay a fee."
+    "ko": "요금을 지불하면 어디든 갈 수 있습니다."
   },
   {
     "hash": "A63A55490BD0C23E18FAD2BBDD84949E",
     "origin": "How can I extract from a map?",
     "autoTranslate": "How can I extract from a map?",
-    "ko": "How can I extract from a map?"
+    "ko": "모험에서 탈출하는 방법이 궁금해요."
   },
   {
     "hash": "021C21BA316D1DDCB6AB8EA5EF27B568",
     "origin": "The only way to leave the map is to find an extraction point.\nThey are marked on the personal device map as green circles.\nGood luck!",
     "autoTranslate": "The only way to leave the map is to find an extraction point.\nThey are marked on the personal device map as green circles.\nGood luck!",
-    "ko": "The only way to leave the map is to find an extraction point.\nThey are marked on the personal device map as green circles.\nGood luck!"
+    "ko": "당신이 여행하고 있는 지역에서 탈출하는 유일한 방법은 탈출 포인트를 찾는것입니다. M키를 눌러 지도를 열면 초록색 원으로 마킹 되어있습니다. 행운을 빌어요."
   },
   {
     "hash": "B9708B2D8492D63B00B42174AE52379C",
@@ -15621,127 +15621,127 @@
     "hash": "9804EACE295B94E9E2D88D31CFBF097B",
     "origin": "NEW GAME",
     "autoTranslate": "NEW GAME",
-    "ko": "NEW GAME"
+    "ko": "새로운 게임"
   },
   {
     "hash": "F90A9B0DDA4CA831F290D612BC329437",
     "origin": "LOAD GAME",
     "autoTranslate": "LOAD GAME",
-    "ko": "LOAD GAME"
+    "ko": "불러오기"
   },
   {
     "hash": "B8E2E6F28D96C901009D75312887A6DA",
     "origin": "TUTORIAL",
     "autoTranslate": "TUTORIAL",
-    "ko": "TUTORIAL"
+    "ko": "튜토리얼"
   },
   {
     "hash": "ED6F7ACA7887A927B9ED3D62AA347A86",
     "origin": "SETTINGS",
     "autoTranslate": "SETTINGS",
-    "ko": "SETTINGS"
+    "ko": "설정"
   },
   {
     "hash": "D2EA2C8BCAB2623A50413A523569E5AE",
     "origin": "PATCH NOTES",
     "autoTranslate": "PATCH NOTES",
-    "ko": "PATCH NOTES"
+    "ko": "패치노트"
   },
   {
     "hash": "E44F9E348E41CB272EFA87387728571B",
     "origin": "DATA",
     "autoTranslate": "DATA",
-    "ko": "DATA"
+    "ko": "데이터"
   },
   {
     "hash": "E5F53FEE4717A20069DA09AA7A0F614D",
     "origin": "CREDITS",
     "autoTranslate": "CREDITS",
-    "ko": "CREDITS"
+    "ko": "제작진"
   },
   {
     "hash": "A42B2FB0E720A080E79A92F4CA97D927",
     "origin": "EXIT",
     "autoTranslate": "EXIT",
-    "ko": "EXIT"
+    "ko": "종료"
   },
   {
     "hash": "E423B8BDE9BFBFD7E9409B23B23AED91",
     "origin": "AUDIO",
     "autoTranslate": "AUDIO",
-    "ko": "AUDIO"
+    "ko": "오디오"
   },
   {
     "hash": "E60AE31F67AB883C746BB71C7A145C18",
     "origin": "VIDEO",
     "autoTranslate": "VIDEO",
-    "ko": "VIDEO"
+    "ko": "비디오"
   },
   {
     "hash": "50FF581B2D4862E5C6288792D6537F96",
     "origin": "RESOLUTION",
     "autoTranslate": "RESOLUTION",
-    "ko": "RESOLUTION"
+    "ko": "해상도"
   },
   {
     "hash": "E56516FF34A16DD1FF3515D65371B54F",
     "origin": "CONTROLS",
     "autoTranslate": "CONTROLS",
-    "ko": "CONTROLS"
+    "ko": "컨트롤"
   },
   {
     "hash": "1DD26F1F1790F0B56D5752FB0FBECEF0",
     "origin": "BACK",
     "autoTranslate": "BACK",
-    "ko": "BACK"
+    "ko": "뒤로"
   },
   {
     "hash": "0548833A152C80A3CD52F01F5E104A36",
     "origin": "SLOT 1",
     "autoTranslate": "SLOT 1",
-    "ko": "SLOT 1"
+    "ko": "슬롯 1"
   },
   {
     "hash": "0F8520B1D6F8D63361A151F82C040714",
     "origin": "SLOT 2",
     "autoTranslate": "SLOT 2",
-    "ko": "SLOT 2"
+    "ko": "슬롯 2"
   },
   {
     "hash": "6AF296D915B3D1BD03640D31DCAAFA79",
     "origin": "SLOT 3",
     "autoTranslate": "SLOT 3",
-    "ko": "SLOT 3"
+    "ko": "슬롯 3"
   },
   {
     "hash": "47559FB833FF58321570E5E877B467F6",
     "origin": "NEXT",
     "autoTranslate": "NEXT",
-    "ko": "NEXT"
+    "ko": "다음"
   },
   {
     "hash": "B078FFD28DB767C502AC367053F6E0AC",
     "origin": "START",
     "autoTranslate": "START",
-    "ko": "START"
+    "ko": "시작"
   },
   {
     "hash": "BF7EC6024933E9154ED4084D3600B655",
     "origin": "DISCORD",
     "autoTranslate": "DISCORD",
-    "ko": "DISCORD"
+    "ko": "디스코드"
   },
   {
     "hash": "53A74F4DAE64C5696E0A379357DF2CF4",
     "origin": "STEAM",
     "autoTranslate": "STEAM",
-    "ko": "STEAM"
+    "ko": "스팀"
   },
   {
     "hash": "E0E28B4B5976E6E5AF1AA23D03376E63",
     "origin": "KICKSTARTER",
     "autoTranslate": "KICKSTARTER",
-    "ko": "KICKSTARTER"
+    "ko": "킥 스타터"
   },
   {
     "hash": "89A1533C37EC9254F22B5E0F29C9C0FF",
@@ -15753,31 +15753,31 @@
     "hash": "0D895A0A05A7CCE9B2C0C8BB252F78CC",
     "origin": "HEARTBEAT",
     "autoTranslate": "HEARTBEAT",
-    "ko": "HEARTBEAT"
+    "ko": "하트비트"
   },
   {
     "hash": "0D1BB1D9EADBD78A366CB0811A37FA60",
     "origin": "MAIN MENU",
     "autoTranslate": "MAIN MENU",
-    "ko": "MAIN MENU"
+    "ko": "메인메뉴"
   },
   {
     "hash": "1976D3681ADBDC0D4072DF211E4F37C0",
     "origin": "GRASS AMOUNT",
     "autoTranslate": "GRASS AMOUNT",
-    "ko": "GRASS AMOUNT"
+    "ko": "풀 개수"
   },
   {
     "hash": "CA918F51C770D37D6A94B513498047CA",
     "origin": "DYNAMIC GRASS ",
     "autoTranslate": "DYNAMIC GRASS ",
-    "ko": "DYNAMIC GRASS "
+    "ko": "동적 그라스"
   },
   {
     "hash": "7926B203968656EE0393F3A9DFD893BF",
     "origin": "ENABLE FOG/RAIN ",
     "autoTranslate": "ENABLE FOG/RAIN ",
-    "ko": "ENABLE FOG/RAIN "
+    "ko": "전장의안개, 비 활성화 "
   },
   {
     "hash": "9C4E4D985C0384614A0E6A0CD3DC811E",
@@ -15789,25 +15789,25 @@
     "hash": "B89C3D897B196FFFF1537331BC659A97",
     "origin": "FULLSCREEN",
     "autoTranslate": "FULLSCREEN",
-    "ko": "FULLSCREEN"
+    "ko": "풀 스크린"
   },
   {
     "hash": "1E91CAA969AA78C7AF6C1445DF3547BB",
     "origin": "FOG OF WAR",
     "autoTranslate": "FOG OF WAR",
-    "ko": "FOG OF WAR"
+    "ko": "전장의 안개"
   },
   {
     "hash": "20212E9C593731AE8233F9C99832DCC9",
     "origin": "FOG ALPHA",
     "autoTranslate": "FOG ALPHA",
-    "ko": "FOG ALPHA"
+    "ko": "전장의 안개 명도"
   },
   {
     "hash": "5B39C8B553C821E7CDDC6DA64B5BD2EE",
     "origin": "DEFAULT",
     "autoTranslate": "DEFAULT",
-    "ko": "DEFAULT"
+    "ko": "기본"
   },
   {
     "hash": "7E39F90815D0CBCA3FCB1178FB9FA803",
