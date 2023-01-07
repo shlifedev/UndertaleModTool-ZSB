@@ -15,7 +15,7 @@
     "hash": "4D604DD8F008145471DC845683399189",
     "origin": "Inventory",
     "autoTranslate": "Inventory",
-    "ko": "Inventory"
+    "ko": "인벤토리"
   },
   {
     "hash": "9BC2392CEBE0239E1B692967830DEE19",
@@ -6549,7 +6549,7 @@
     "hash": "960F13DBDD8EF060CEA1FC4FA2AB0651",
     "origin": "Hello hunter, do you wanna go somewhere?",
     "autoTranslate": "Hello hunter, do you wanna go somewhere?",
-    "ko": "Hello hunter, do you wanna go somewhere?"
+    "ko": "헌터, 반갑습니다. 어딘가로 떠나고 싶으신가요?"
   },
   {
     "hash": "CB34C9486C9B4F85EB9523B393C851D9",

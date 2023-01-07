@@ -25,7 +25,7 @@ public class Patcher
 
     private Dictionary<string, UndertaleTexturePageItem> _fontTextureMap = new Dictionary<string, UndertaleTexturePageItem>();
     private Dictionary<string, JObject> _fontYYInfoMap = new Dictionary<string, JObject>();
-     
+
     UndertaleData ReadDataFile(FileInfo datafile)
     {
         try
@@ -107,6 +107,12 @@ public class Patcher
     {
         Console.WriteLine("원본파일 읽는중...");
         this.Data = ReadDataFile(new FileInfo(dataFilePath));
+
+        Data.Fonts.ToList().ForEach(x =>
+        {
+            Console.WriteLine(x.Name + "," + x.EmSize);
+        });
+
         hashedLocalDatas = new Dictionary<string, List<UndertaleString>>();
 
         Console.WriteLine("번역파일 분석중..");
@@ -144,13 +150,13 @@ public class Patcher
         foreach (var localString in Data.Strings)
         {
             // 로컬 스트링의 해시를 읽는다.
-            var localHash = CreateMD5(localString.Content); 
+            var localHash = CreateMD5(localString.Content);
             // 게임 로컬스트링이 번역파일 해시에 존재하는경우 스트링을 갈아끼운다.
             if (translateData.ContainsKey(localHash))
             {
                 // 게임 실제 패치플로우
                 string content = "";
-                content = translateData[localHash].ko;  
+                content = translateData[localHash].ko;
                 Console.WriteLine($"[Load Localization] {localString.Content} Change To {content}");
                 localString.Content = content;
             }
@@ -164,7 +170,7 @@ public class Patcher
         if (_fontTextureMap.ContainsKey(fontName)) return _fontTextureMap[fontName];
         // ./localization/font
         var fontDir = new DirectoryInfo(FontPath);
-        var png = new FileInfo(Path.Combine(FontPath, fontName+".png"));
+        var png = new FileInfo(Path.Combine(FontPath, fontName + ".png"));
         // create embeded texture
         Bitmap bitmap = new Bitmap(png.FullName);
         UndertaleEmbeddedTexture texture = new UndertaleEmbeddedTexture();
@@ -197,7 +203,7 @@ public class Patcher
         {
             return _fontYYInfoMap[fontName];
         }
-        var yy = new FileInfo(Path.Combine(FontPath, fontName+".yy"));
+        var yy = new FileInfo(Path.Combine(FontPath, fontName + ".yy"));
         JObject fontData = null;
         using (StreamReader file = File.OpenText((string)yy.FullName))
         {
@@ -226,19 +232,18 @@ public class Patcher
 
         font.Texture = texture;
         font.Glyphs.Clear();
-        font.DisplayName = Data.Strings.MakeString((string)fontData["fontName"]);
-        font.EmSize = (uint)fontData["size"];
+        font.DisplayName = Data.Strings.MakeString((string)fontData["fontName"]); 
         font.Bold = (bool)fontData["bold"];
         font.Italic = (bool)fontData["italic"];
         font.Charset = (byte)fontData["charset"];
         font.AntiAliasing = (byte)fontData["AntiAlias"];
-
+       
         if (fontData.ContainsKey("ascender"))
             font.Ascender = (uint)fontData["ascender"];
         if (fontData.ContainsKey("ascenderOffset"))
-            font.AscenderOffset = (int)fontData["ascenderOffset"]; 
+            font.AscenderOffset = (int)fontData["ascenderOffset"];
         font.RangeStart = 0;
-        font.RangeEnd = 0; 
+        font.RangeEnd = 0;
 
         foreach (JObject range in fontData["ranges"].Values<JObject>())
         {
@@ -282,15 +287,16 @@ public class Patcher
         // Sort glyphs like in UndertaleFontEditor to be safe
         glyphs.Sort((x, y) => x.Character.CompareTo(y.Character));
         font.Glyphs.Clear();
-
+         
         foreach (UndertaleFont.Glyph glyph in glyphs)
             font.Glyphs.Add(glyph);
     }
     public Patcher ApplyFont()
     { 
-
-        foreach(var font in Data.Fonts) 
-            ChangeFont(font.Name.Content, "Font1"); 
+        foreach (var font in Data.Fonts)
+        { 
+                ChangeFont(font.Name.Content, "font_main_menu"); 
+        }
 
 
         return this;

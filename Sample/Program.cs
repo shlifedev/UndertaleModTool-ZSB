@@ -28,7 +28,7 @@ public static class Program
     public static string OriginalDataPath => $"{GameRootPath}./data.win";
     public static string MutatedDataPath => $"{GameRootPath}/localized.win";
     public static string LocalePath => $"./localization/data.json";
-    public static string LocaleFontDirectoryPath => $"./localization/font";
+    public static string LocaleFontDirectoryPath => $"./localization/font"; 
     static void Main(string[] args)
     {
         GameRootPath = "Game";
