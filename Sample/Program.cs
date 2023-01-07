@@ -6,46 +6,26 @@ using System.Linq;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Text.Json.Serialization;
+using System.IO;
 
 public static class Program
 {
     public static UndertaleData data;
     public static string GameExePath => "./Game/ZERO Sievert.exe";
     public static string GamePath => "./Game/";
-    public static string GameArgs => "-game ./Game/Test.bin"; 
+    public static string GameArgs => "-game ./localization/data.bin"; 
 
     
     static void Main(string[] args)
     {
-        var skipCreatePatch = args.Where(x => x == "--skip").FirstOrDefault() != null;
-        Console.WriteLine("원본 파일 로드중..");
-        data = ReadDataFile(new FileInfo(@"C:\Users\jsh\UndertaleModTool-ZSB\Sample\bin\Debug\net6.0-windows\Game\data.win"));
-
-        if (!skipCreatePatch)
-        { 
-            data = ReadDataFile(new FileInfo(@"C:\Users\jsh\UndertaleModTool-ZSB\Sample\bin\Debug\net6.0-windows\Game\data.win"));
-            Console.WriteLine("한글패치 적용 임시 모드파일 생성중..");
-            var patcher = new Patcher(data, "translated.json");
-            patcher.Patch();
-            patcher.Save("./Game/Test.bin");
-        }
-        else
-        {
-            Console.WriteLine("패치 생성이 스킵되었습니다.");
-        }
-
-
-        Console.WriteLine("게임 실행..");
-        StartGame();
+        var patcher = new Patcher("./Game/data.win", "./localization/data.json", "./localization/font");
+            patcher.ApplyTranslate().End().Save("./localization/data.bin");
+       
+        Process.Start(GameExePath, GameArgs);
     }
 
  
-    static void StartGame()
-    {
-        Process.Start(GameExePath, GameArgs);
-    } 
-
-
+     
     public static bool IsMaybePureString(UndertaleString str)
     { 
 
@@ -82,19 +62,5 @@ public static class Program
             str.Content.StartsWith("bool") == false &&
             str.Content.StartsWith("float4") == false
         );
-    }
-
-    static UndertaleData ReadDataFile(FileInfo datafile)
-    {
-        try
-        {
-            using FileStream fs = datafile.OpenRead();
-            UndertaleData gmData = UndertaleIO.Read(fs);
-            return gmData;
-        }
-        catch (FileNotFoundException e)
-        {
-            throw new FileNotFoundException($"Data file '{e.FileName}' does not exist");
-        }
-    }
+    } 
 }
