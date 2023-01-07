@@ -9,6 +9,7 @@ using static UndertaleModLib.Models.UndertaleSequence;
 using System.Drawing;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 public class Patcher
 {
@@ -35,12 +36,65 @@ public class Patcher
             throw new FileNotFoundException($"Data file '{e.FileName}' does not exist");
         }
     }
+    bool IsMaybePureString(UndertaleString str)
+    {
+
+        return (
+            Data.AudioGroups.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Backgrounds.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Sounds.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Shaders.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Sprites.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.EmbeddedTextures.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.TextureGroupInfo.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.TexturePageItems.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Fonts.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Timelines.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.GameObjects.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Paths.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Code.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Functions.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.EmbeddedAudio.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.CodeLocals.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Functions.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Rooms.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Variables.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.Extensions.Where(x => x.Name == str).FirstOrDefault() == null &&
+            str.Content.StartsWith("#define") == false &&
+            str.Content.Contains("#define") == false &&
+            str.Content.Contains("obj_map") == false &&
+            str.Content.Contains("tilemap_set") == false &&
+            str.Content.StartsWith("precision mediump") == false &&
+            str.Content.StartsWith("void main()") == false &&
+            str.Content.StartsWith("scr_") == false &&
+            str.Content.StartsWith("ga_") == false &&
+            str.Content.StartsWith("gm_") == false &&
+            str.Content.StartsWith("bool") == false &&
+            str.Content.StartsWith("float4") == false
+        );
+    }
+    public Patcher ExportStrings(string savePath)
+    {
+        List<GameString> strings = new List<GameString>();
+        foreach(var str in Data.Strings)
+        {
+            if (IsMaybePureString(str))
+            {
+                var data = new GameString(CreateMD5(str.Content), str.Content, str.Content, str.Content);
+                strings.Add(data);
+            }
+        }
+        var content = JsonConvert.SerializeObject(strings);
+        System.IO.File.WriteAllText(savePath, content);
+        return this;
+    }
     public Patcher(string dataFilePath, string translateFilePath, string fontPath)
     {
+        Console.WriteLine("원본파일 읽는중...");
         this.Data = ReadDataFile(new FileInfo(dataFilePath));
         hashedLocalDatas = new Dictionary<string, List<UndertaleString>>();
 
-        Console.WriteLine("translated.json 분석중..");
+        Console.WriteLine("번역파일 분석중..");
         var content = System.IO.File.ReadAllText(translateFilePath);
         var loadedGameStrings = JsonConvert.DeserializeObject<List<GameString>>(content);
         translateData = new Dictionary<string, GameString>();
@@ -71,10 +125,15 @@ public class Patcher
 
     public Patcher ApplyTranslate()
     {
-        Console.WriteLine("번역데이터를 게임컨텐츠에 수정중..");
-        foreach (var gameString in Data.Strings)
+        Console.WriteLine("번역데이터를 게임컨텐츠에 수정중.."); 
+         foreach (var gameString in Data.Strings)
         {
             var localHash = CreateMD5(gameString.Content);
+            
+            if (localHash == "6ADBB6B1451B2167F10AF096AE72DC0C")
+            {
+                Console.WriteLine("먀옹");
+            }
             if (translateData.ContainsKey(localHash))
             {
                 // 게임 실제 패치플로우
@@ -89,18 +148,41 @@ public class Patcher
 
 
     public Patcher ApplyFont()
-    { 
+    {
+        Console.WriteLine("폰트 적용중..");
         var fontDir = new DirectoryInfo(FontPath);
-        var fontYYFiles = fontDir.GetFiles("*.yy");
-        var fontTextureFiles = fontDir.GetFiles("*.png");
+        var fontYYFiles = fontDir.GetFiles("*.yy").FirstOrDefault();
+        var fontTextureFiles = fontDir.GetFiles("*.png").FirstOrDefault(); 
 
-        for(int i = 0;  i< Data.Fonts.Count; i++)
+        Bitmap bitmap = new Bitmap(fontTextureFiles.FullName);
+        UndertaleEmbeddedTexture texture = new UndertaleEmbeddedTexture();
+        texture.Name = Data.Strings.MakeString("Texture " + Data.EmbeddedTextures.Count); // ???
+        texture.TextureData.TextureBlob = File.ReadAllBytes(fontTextureFiles.FullName);
+        Data.EmbeddedTextures.Add(texture);
+
+
+        UndertaleTexturePageItem texturePageItem = new UndertaleTexturePageItem();
+        texturePageItem.Name = Data.Strings.MakeString("PageItem " + Data.TexturePageItems.Count); // ???
+        texturePageItem.TexturePage = texture;
+        texturePageItem.SourceX = 0;
+        texturePageItem.SourceY = 0;
+        texturePageItem.SourceWidth = (ushort)bitmap.Width;
+        texturePageItem.SourceHeight = (ushort)bitmap.Height;
+        texturePageItem.TargetX = 0;
+        texturePageItem.TargetY = 0;
+        texturePageItem.TargetWidth = (ushort)bitmap.Width;
+        texturePageItem.TargetHeight = (ushort)bitmap.Height;
+        texturePageItem.BoundingWidth = (ushort)bitmap.Width;
+        texturePageItem.BoundingHeight = (ushort)bitmap.Height;
+        Data.TexturePageItems.Add(texturePageItem);
+
+
+
+        for (int i = 0;  i< Data.Fonts.Count; i++)
         {
             JObject fontData = null;
-            var font = Data.Fonts[i];
-
-            var yy = fontYYFiles[0];
-            var tex = fontTextureFiles[0];
+            var font = Data.Fonts[i]; 
+            var yy = fontYYFiles;
 
             using (StreamReader file = File.OpenText(yy.FullName))
             {
@@ -110,30 +192,7 @@ public class Patcher
                 }
             }
              
-
-            //텍스쳐 생성
-            Bitmap bitmap = new Bitmap(tex.FullName);
-            UndertaleEmbeddedTexture texture = new UndertaleEmbeddedTexture();
-            texture.Name = Data.Strings.MakeString("Texture " + Data.EmbeddedTextures.Count); // ???
-            texture.TextureData.TextureBlob = File.ReadAllBytes(tex.FullName);
-            Data.EmbeddedTextures.Add(texture);
-
-
-            UndertaleTexturePageItem texturePageItem = new UndertaleTexturePageItem();
-            texturePageItem.Name = Data.Strings.MakeString("PageItem " + Data.TexturePageItems.Count); // ???
-            texturePageItem.TexturePage = texture;
-            texturePageItem.SourceX = 0;
-            texturePageItem.SourceY = 0;
-            texturePageItem.SourceWidth = (ushort)bitmap.Width;
-            texturePageItem.SourceHeight = (ushort)bitmap.Height;
-            texturePageItem.TargetX = 0;
-            texturePageItem.TargetY = 0;
-            texturePageItem.TargetWidth = (ushort)bitmap.Width;
-            texturePageItem.TargetHeight = (ushort)bitmap.Height;
-            texturePageItem.BoundingWidth = (ushort)bitmap.Width;
-            texturePageItem.BoundingHeight = (ushort)bitmap.Height;
-            Data.TexturePageItems.Add(texturePageItem);
-          
+             
             font.Texture = texturePageItem;
             font.Glyphs.Clear();
             font.DisplayName = Data.Strings.MakeString((string)fontData["fontName"]);
@@ -141,10 +200,9 @@ public class Patcher
             font.Bold = (bool)fontData["bold"];
             font.Italic = (bool)fontData["italic"];
             font.Charset = (byte)fontData["charset"];
-            font.AntiAliasing = (byte)fontData["AntiAlias"];
+            font.AntiAliasing = (byte)fontData["AntiAlias"]; 
 
-            font.ScaleX = 1;
-            font.ScaleY = 1;
+
             if (fontData.ContainsKey("ascender"))
                 font.Ascender = (uint)fontData["ascender"];
             if (fontData.ContainsKey("ascenderOffset"))
@@ -208,6 +266,9 @@ public class Patcher
     public Patcher Save(string path)
     {
         Console.WriteLine("새로운 바이너리로 저장중..");
+        var fi = new FileInfo(path);
+        if (fi.Exists) fi.Delete();
+
         using FileStream fs = new FileInfo(path).OpenWrite();
         UndertaleIO.Write(fs, Data); 
         return this;

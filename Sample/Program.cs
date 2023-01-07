@@ -7,59 +7,60 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Text.Json.Serialization;
 using System.IO;
+using static UndertaleModLib.Compiler.Compiler.AssemblyWriter;
 
 public static class Program
 {
     public static UndertaleData data;
-    public static string GameExePath => "./Game/ZERO Sievert.exe";
-    public static string GamePath => "./Game/";
-    public static string GameArgs => "-game ./localization/data.bin"; 
-
-    
+    public static string GameExePath => "./ZERO Sievert.exe";
+    public static string GamePath => "./";
+    public static string DataPath => "./data.win";
+    public static string GameArgs => "-game ./localized.win";
+    public static string LocalePath => "./localization/data.json";
+    public static string LocaleFontPath => "./localization/font";
     static void Main(string[] args)
     {
-        var patcher = new Patcher("./Game/data.win", "./localization/data.json", "./localization/font").ApplyFont().ApplyTranslate().Save("./localization/data.bin");
-       
-        Process.Start(GameExePath, GameArgs);
+        while (true)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("  [제로 시버트 한글패치 CLI] [v.001]");
+            Console.WriteLine("  오류수정/버그문의 : shlifedev@gmail.com ");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" 아래의 숫자를 입력해주세요.");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(" 1 -  입력시 게임 한글패치 진행 (30초-1분 정도 시간 소요)\n");
+            Console.WriteLine(" 2 -  입력시 한글패치 적용된 게임실행 (1번과정 완료시 생략가능)\n");
+            Console.WriteLine(" 0 -  [개발용] 모든 한글 출력\n");
+            Console.Write("숫자를 입력해주세요 :");
+            Console.ForegroundColor = ConsoleColor.White;
+            var input = Console.ReadLine();
+            Console.Clear();
+            if (input == "1")
+            {
+                Console.Clear();
+                var patcher = new Patcher(DataPath, LocalePath, LocaleFontPath);
+                patcher.ApplyTranslate();
+                patcher.ApplyFont();
+                patcher.Save("./localized.win");
+                Process.Start(GameExePath, GameArgs);
+            }
+            if (input == "2")
+            {
+                Process.Start(GameExePath, GameArgs);
+                break;
+            }
+            if (input == "0")
+            {
+                var patcher = new Patcher(DataPath, LocalePath, LocaleFontPath);
+                patcher.ExportStrings("./localization/debug/en.json");
+                break;
+            }
+            Console.Clear();
+        }
     }
 
  
      
-    public static bool IsMaybePureString(UndertaleString str)
-    { 
-
-        return (
-            data.AudioGroups.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Backgrounds.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Sounds.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Shaders.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Sprites.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.EmbeddedTextures.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.TextureGroupInfo.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.TexturePageItems.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Fonts.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Timelines.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.GameObjects.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Paths.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Code.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Functions.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.EmbeddedAudio.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.CodeLocals.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Functions.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Rooms.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Variables.Where(x => x.Name == str).FirstOrDefault() == null &&
-            data.Extensions.Where(x => x.Name == str).FirstOrDefault() == null &&
-            str.Content.StartsWith("#define") == false &&
-            str.Content.Contains("#define") == false &&
-            str.Content.Contains("obj_map") == false &&
-            str.Content.Contains("tilemap_set") == false &&
-            str.Content.StartsWith("precision mediump") == false &&
-            str.Content.StartsWith("void main()") == false &&
-            str.Content.StartsWith("scr_") == false &&
-            str.Content.StartsWith("ga_") == false &&
-            str.Content.StartsWith("gm_") == false &&
-            str.Content.StartsWith("bool") == false &&
-            str.Content.StartsWith("float4") == false
-        );
-    } 
+     
 }
