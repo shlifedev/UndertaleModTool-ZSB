@@ -46,14 +46,14 @@ public static class Program
         if (args.Length == 0)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(" [제로 시버트 한글패치 CLI] [v.0.0.2]");
+            Console.WriteLine(" [제로 시버트 한글패치 CLI] ");
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(" 아래의 숫자를 입력해주세요.");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(" 1 -  입력시 게임 한글패치 진행 (30초-1분 정도 시간 소요)\n");
             Console.WriteLine(" 2 -  입력시 한글패치 적용된 게임실행 (1번과정 완료시 생략가능)\n");
-            Console.WriteLine(" 3 -  입력시 패치가 적용되지 않은 게임실행 (1번과정 완료시 생략가능)\n");
+            Console.WriteLine(" 3 -  입력시 패치가 적용되지 않은 게임실행\n");
             Console.ForegroundColor = ConsoleColor.White;
             var input = Console.ReadLine();
             Console.Clear();
