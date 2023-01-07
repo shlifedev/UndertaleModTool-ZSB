@@ -31,12 +31,20 @@ public static class Program
     public static string LocaleFontDirectoryPath => $"./localization/font"; 
     static void Main(string[] args)
     {
-        GameRootPath = "Game";
+        GameRootPath = ".";
+
+        if(!new FileInfo(GameExePath).Exists)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"[!] {GameRootPath}에서 ZERO Sievert.exe 를 찾을 수 없습니다. 게임 경로(폴더)를 직접 입력하세요");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("경로 입력:");
+            Console.ForegroundColor = ConsoleColor.White;
+            GameRootPath = Console.ReadLine(); 
+        }
 
         if (args.Length == 0)
-        {
-            while (true)
-            {
+        { 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(" [제로 시버트 한글패치 CLI] [v.0.0.2]"); 
 
@@ -60,11 +68,9 @@ public static class Program
                 }
                 if (input == "2")
                 {
-                    Process.Start(GameExePath, GameArgs);
-                    break;
+                    Process.Start(GameExePath, GameArgs); 
                 } 
-                Console.Clear();
-            }
+                Console.Clear(); 
         }
     }
 
