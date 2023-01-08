@@ -1,13 +1,5 @@
-﻿using static UndertaleModLib.UndertaleReader;
+﻿using System.Diagnostics;
 using UndertaleModLib;
-using UndertaleModLib.Models;
-using UndertaleModLib.Compiler;
-using System.Linq;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using System.Text.Json.Serialization;
-using System.IO;
-using static UndertaleModLib.Compiler.Compiler.AssemblyWriter;
 
 public static class Program
 {
@@ -22,42 +14,63 @@ public static class Program
     /// 임베드 데이터로드가 가능하려면 exe와 같은폴더에 있어야함
     /// </summary> 
     public static string GameArgs => $"-game localized.win -debugoutput ./localization/log.txt"; 
-    public static string GameExePath => Path.Combine(GameRootPath, "Zero Sievert.exe");
+    /// <summary>
+    /// 실행파일 경로
+    /// </summary>
+    public static string GameExePath => Path.Combine(GameRootPath, "Zero Sievert.exe"); 
+    /// <summary>
+    /// 데이터 파일 위치
+    /// </summary>
     public static string OriginalDataPath => Path.Combine(GameRootPath, "data.win");
+    /// <summary>
+    /// 수정된 data.win 위치
+    /// </summary>
     public static string MutatedDataPath => Path.Combine(GameRootPath, "localized.win");
+    /// <summary>
+    /// 번역데이터 경로
+    /// </summary>
     public static string LocalePath => Path.Combine(AppContext.BaseDirectory, "localization", "data.json");
+    /// <summary>
+    /// 번역데이터 폴더 경로
+    /// </summary>
     public static string LocaleFontDirectoryPath => Path.Combine(AppContext.BaseDirectory, "localization", "font");
 
-    private static bool InDevelopment = false;
-    static void Main(string[] args)
+ 
+
+    /// <summary>
+    /// 원격 cdn or api에서 다운로드
+    /// </summary>
+    private static void DownloadLatestData()
     {
-        GameRootPath = AppDomain.CurrentDomain.BaseDirectory; 
-        if (InDevelopment)
+#if !RELEASE
+        try
         {
-            Console.WriteLine("[개발자 모드] 구글시트로부터 최신 번역 파일 다운로드 중"); 
-            var task = Updator.GetUpdatedText();  
-            System.IO.File.WriteAllText(LocalePath, task.Result);
-
-            Console.WriteLine("게임을 실행하면 구글시트의 최신 작업내용이 반영되어 있어야 합니다.\n");
-            System.Threading.Thread.Sleep(500);
-        }  
-         
-
-        while (!new FileInfo(GameExePath).Exists)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"[!] {GameRootPath}에서 ZERO Sievert.exe  를 찾을 수 없습니다. 이 파일은 제로시버트 설치경로에 포함시켜야 합니다. 게임 경로(폴더)를 직접 입력하세요");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("경로 입력:");
-            Console.ForegroundColor = ConsoleColor.White;
-            GameRootPath = Console.ReadLine();
+            Console.WriteLine("[개발자 모드] 구글시트로부터 최신 번역 파일 다운로드 중");
+            var task = Updator.GetLatestFromSpreadSheet();
+            if (task.Result != null)
+            {
+                System.IO.File.WriteAllText(LocalePath, task.Result);
+                Console.WriteLine("다운로드 완료\n");
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
-        Console.Clear();
+        catch
+        {
+            Console.WriteLine("최신 데이터 다운로드 실패");
+        }
+#endif
+    }
+    static void Main(string[] args)
+    { 
+        GameRootPath = AppDomain.CurrentDomain.BaseDirectory;
+        DownloadLatestData();  
         var patcher = new Patcher(OriginalDataPath, LocalePath, LocaleFontDirectoryPath);
         patcher.ApplyTranslate()
             .ApplyFont()
-            .Save(MutatedDataPath);
-
+            .Save(MutatedDataPath); 
         Process.Start(GameExePath, GameArgs);
     } 
 

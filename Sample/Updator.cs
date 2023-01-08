@@ -1,28 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 
 public static class Updator
 {
-    private static string jsonURL = "https://script.google.com/macros/s/AKfycbxRVBLdp0-fhQEcSaAH0ZzA7MpNSBXNJaIUFqRg22aL2LHW3tDCzLm9lAo5-GZYrZT39Q/exec";
-    public static async Task<string> GetUpdatedText()
+    private static string remoteJsonUrl = "https://script.google.com/macros/s/AKfycbxRVBLdp0-fhQEcSaAH0ZzA7MpNSBXNJaIUFqRg22aL2LHW3tDCzLm9lAo5-GZYrZT39Q/exec";
+
+
+    public static async Task<string> GetLatestFromSpreadSheet()
     {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(jsonURL);
-        request.Method = "GET"; 
+        return await Get(remoteJsonUrl);
+    }
+
+    public static async Task<string> Get(string url)
+    {
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        request.Method = "GET";
         var response = await request.GetResponseAsync();
-        string responseText = string.Empty;
-         
+     
+        string responseText = string.Empty; 
         Stream respStream = response.GetResponseStream();
 
-        using (StreamReader sr = new StreamReader(respStream))
-        {
-            responseText = sr.ReadToEnd();
-        }
-
+        using (StreamReader sr = new StreamReader(respStream)) 
+            responseText = sr.ReadToEnd(); 
         return responseText;
     }
 }

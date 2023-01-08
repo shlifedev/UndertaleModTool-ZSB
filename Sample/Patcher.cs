@@ -1,28 +1,26 @@
-﻿using UndertaleModLib;
-using UndertaleModLib.Models;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using static UndertaleModLib.Compiler.Compiler.Lexer;
-using static UndertaleModLib.Models.UndertaleSequence;
-using System.Drawing;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using static System.Net.Mime.MediaTypeNames;
+using UndertaleModLib;
+using UndertaleModLib.Models;
 
 public class Patcher
-{
-    private Dictionary<string, GameString> translateData;
-    /// <summary>
-    /// 중복 스트링이 있을 수 있으므로 리스트로 관리한다.
-    /// </summary>
-    private Dictionary<string, List<UndertaleString>> hashedLocalDatas;
+{ 
+    ///// <summary>
+    ///// 중복 스트링이 있을 수 있으므로 리스트로 관리한다.
+    ///// </summary>
+    //private Dictionary<string, List<UndertaleString>> hashedLocalDatas;
 
     public UndertaleData Data { get; set; }
     public string TranslateFilePath { get; }
     public string FontPath { get; }
 
+    /// <summary>
+    /// qjsdurepdlxj
+    /// </summary>
+    private Dictionary<string, GameString> _loadedLocale;
     private Dictionary<string, UndertaleTexturePageItem> _fontTextureMap = new Dictionary<string, UndertaleTexturePageItem>();
     private Dictionary<string, JObject> _fontYYInfoMap = new Dictionary<string, JObject>();
 
@@ -39,6 +37,7 @@ public class Patcher
             throw new FileNotFoundException($"Data file '{e.FileName}' does not exist");
         }
     }
+    
     /// <summary>
     /// 번역데이터를 외부로 내보낼때 스트링이 순수한 번역데이터인지 확인한다.
     /// </summary> 
@@ -66,6 +65,7 @@ public class Patcher
             Data.Rooms.Where(x => x.Name == str).FirstOrDefault() == null &&
             Data.Variables.Where(x => x.Name == str).FirstOrDefault() == null &&
             Data.Extensions.Where(x => x.Name == str).FirstOrDefault() == null &&
+            // 임시 처리, 사실상 소문자 스트링은 번역에서 걸러내도 될 것 같음
             str.Content.StartsWith("#define") == false &&
             str.Content.Contains("#define") == false &&
             str.Content.Contains("obj_map") == false &&
@@ -76,10 +76,17 @@ public class Patcher
             str.Content.StartsWith("ga_") == false &&
             str.Content.StartsWith("gm_") == false &&
             str.Content.StartsWith("bool") == false &&
-            str.Content.StartsWith("float4") == false
+            str.Content.StartsWith("float4") == false &&
+            // Inventory는 번역시 세이브가 날아간다. 하드코딩 이슈같은데 이 스트링은 무시해야함.
+            str.Content.Equals("Inventory") == false
         );
     }
 
+    /// <summary>
+    /// 게임 스트링 모두 출력(저장)
+    /// </summary>
+    /// <param name="savePath"></param>
+    /// <returns></returns>
     public Patcher ExportStrings(string savePath)
     {
         List<GameString> strings = new List<GameString>();
@@ -96,6 +103,16 @@ public class Patcher
         return this;
     }
 
+
+    /// <summary>
+    /// 추후 게임 버전이 올라가면 원본 스트링과 최신 스트링을 비교해서
+    /// 번역시트를 업데이트 해야하기에 필요시 구현
+    /// </summary> 
+    public List<GameString> Migration(string originalLocalePath, string latestLocalePath)
+    {
+        throw new NotImplementedException();
+    }
+
     /// <summary>
     /// 패쳐 생성
     /// </summary>
@@ -106,64 +123,71 @@ public class Patcher
     public Patcher(string dataFilePath, string translateFilePath, string fontPath)
     {
         Console.WriteLine("원본파일 읽는중...");
- 
-        this.Data = ReadDataFile(new FileInfo(dataFilePath));
-        Console.WriteLine($@"
-DatafilePath : {dataFilePath}
-FileInfo : {new FileInfo(dataFilePath).FullName}
-");
+         
+        TranslateFilePath = translateFilePath;
+        FontPath = fontPath;
 
+        // 데이터 불러오기
+        this.Data = ReadDataFile(new FileInfo(dataFilePath));  
+        Console.WriteLine("게임 내 폰트 이름과 폰트 사이즈를 출력합니다.");
         Data.Fonts.ToList().ForEach(x =>
         {
             Console.WriteLine(x.Name + "," + x.EmSize);
         });
+         
 
-        hashedLocalDatas = new Dictionary<string, List<UndertaleString>>();
-
-        Console.WriteLine("번역파일 분석중..");
+        Console.WriteLine("번역파일을 불러오고 있습니다."); 
+        // 번역 파일 로드 (data.json)
         var content = System.IO.File.ReadAllText(translateFilePath);
         var loadedGameStrings = JsonConvert.DeserializeObject<List<GameString>>(content);
-        translateData = new Dictionary<string, GameString>();
-        if (loadedGameStrings != null)
-        {
-            foreach (var str in loadedGameStrings)
-            {
-                if (str.hash != null && !translateData.ContainsKey(str.hash))
-                {
-                    translateData.Add(str.hash, str);
-                }
-            }
-        }
-        if (translateData.Count == 0) throw new Exception("번역 데이터 로드실패 (code 2)");
+        _loadedLocale = new Dictionary<string, GameString>();
+
+        // 로드된 번역파일 데이터에 추가 
+        if (loadedGameStrings != null) 
+            foreach (var str in loadedGameStrings) 
+                if (str.hash != null && !_loadedLocale.ContainsKey(str.hash)) 
+                    _loadedLocale.Add(str.hash, str);  
+
+
+        // 몇 가지 예외 체크
+        if (_loadedLocale.Count == 0) throw new Exception("번역 데이터 로드실패 (code 2)");
         if (loadedGameStrings == null) throw new Exception("번역 데이터 로드실패");
 
-        foreach (var internalString in Data.Strings)
-        {
-            var hash = CreateMD5(internalString.Content);
-            if (!hashedLocalDatas.ContainsKey(hash))
-                hashedLocalDatas.Add(hash, new List<UndertaleString>());
-            hashedLocalDatas[hash].Add(internalString);
-        }
-        TranslateFilePath = translateFilePath;
-        FontPath = fontPath;
+
+        //hashedLocalDatas = new Dictionary<string, List<UndertaleString>>();
+        //// 인게임 스트링 해쉬화 및 딕셔너리 추가
+        //foreach (var internalString in Data.Strings)
+        //{
+        //    var hash = CreateMD5(internalString.Content);
+        //    if (!hashedLocalDatas.ContainsKey(hash))
+        //        hashedLocalDatas.Add(hash, new List<UndertaleString>());
+        //    hashedLocalDatas[hash].Add(internalString);
+        //}
+ 
     }
 
 
     public Patcher ApplyTranslate()
     {
-        Console.WriteLine("번역데이터를 게임컨텐츠에 수정중..");
+        Console.WriteLine("불러온 번역데이터를 게임컨텐츠에 수정중..");
         foreach (var localString in Data.Strings)
         {
             // 로컬 스트링의 해시를 읽는다.
             var localHash = CreateMD5(localString.Content);
             // 게임 로컬스트링이 번역파일 해시에 존재하는경우 스트링을 갈아끼운다.
-            if (translateData.ContainsKey(localHash))
+            // 이렇게 하면 게임 버전이 바뀌어도 스트링이 동일하면 대부분 대응이 가능함.
+            if (_loadedLocale.ContainsKey(localHash))
             {
                 // 게임 실제 패치플로우
                 string content = "";
-                content = translateData[localHash].ko;
-                Console.WriteLine($"[Load Localization] {localString.Content} Change To {content}");
-                localString.Content = content;
+                content = _loadedLocale[localHash].ko;
+
+                // 불러오는데 시간이 좀 더 걸려도 그렇게 느리진 않을거같고 번역시트상 데이터 자체가 잘못되어 있을 수 있으니
+                // 순수 스트링 검사를 한번 수행하는게 좋을 듯.
+                if (IsMaybePureString(localString))
+                {
+                    localString.Content = content;
+                }
             }
         }
         return this;
