@@ -13,7 +13,5 @@
 ## 번역파일 업데이트
 - 현재 구글시트 최신파일을 `data.json` 으로 받고싶은 분들은 [이 URL](https://script.google.com/macros/s/AKfycbzoZLc9oaBV6Lq94WZ-3sg_bX0d_yi0_O2rJVhsSYNbwdoTBfiif7WwFR6CZIjEzjLjHQ/exec)로 접속하세요
 
-## 해야 할 일
-- 번역파일간 마이그레이션
-- 폰트 출력 안정화
-- 폰트별 크기에 알맞는 별도 폰트 텍스쳐 생성
+## 해야 할 일 
+- 폰트 출력 안정화 
