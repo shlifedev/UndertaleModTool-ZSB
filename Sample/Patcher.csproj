@@ -8,8 +8,12 @@
     <ImplicitUsings>enable</ImplicitUsings> 
     <Nullable>enable</Nullable>
     <PublishReadyToRun>true</PublishReadyToRun>
-    <Configurations>Debug;Release;Publish</Configurations> 
-  </PropertyGroup>
+    <Configurations>Debug;Release;Publish</Configurations>
+    <ApplicationIcon>res\favicon.ico</ApplicationIcon> 
+  </PropertyGroup> 
+  <ItemGroup>
+    <Content Include="res\favicon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
