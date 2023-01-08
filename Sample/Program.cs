@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Text.Json.Serialization;
 using System.IO;
-using static UndertaleModLib.Compiler.Compiler.AssemblyWriter; 
+using static UndertaleModLib.Compiler.Compiler.AssemblyWriter;
 
 public static class Program
 {
@@ -20,21 +20,18 @@ public static class Program
     /// <summary>
     /// 데이터파일 경로
     /// 임베드 데이터로드가 가능하려면 exe와 같은폴더에 있어야함
-    /// </summary>
-    public static string GameArgs => $"-game {MutatedDataPath}";
-
-
-    public static string GameExePath => $"{GameRootPath}/ZERO Sievert.exe";
-    public static string OriginalDataPath => $"{GameRootPath}./data.win";
-    public static string MutatedDataPath => $"{GameRootPath}/localized.win";
-    public static string LocalePath => $"./localization/data.json";
-    public static string LocaleFontDirectoryPath => $"./localization/font";
+    /// </summary> 
+    public static string GameArgs => $"-game localized.win -debugoutput ./localization/log.txt"; 
+    public static string GameExePath => Path.Combine(GameRootPath, "Zero Sievert.exe");
+    public static string OriginalDataPath => Path.Combine(GameRootPath, "data.win");
+    public static string MutatedDataPath => Path.Combine(GameRootPath, "localized.win");
+    public static string LocalePath => Path.Combine(AppContext.BaseDirectory, "localization", "data.json");
+    public static string LocaleFontDirectoryPath => Path.Combine(AppContext.BaseDirectory, "localization", "font");
 
     private static bool InDevelopment = false;
     static void Main(string[] args)
     {
-        GameRootPath = ".";
-
+        GameRootPath = AppDomain.CurrentDomain.BaseDirectory; 
         if (InDevelopment)
         {
             Console.WriteLine("[개발자 모드] 구글시트로부터 최신 번역 파일 다운로드 중"); 
@@ -62,9 +59,6 @@ public static class Program
             .Save(MutatedDataPath);
 
         Process.Start(GameExePath, GameArgs);
-    }
-
-
-
+    } 
 
 }

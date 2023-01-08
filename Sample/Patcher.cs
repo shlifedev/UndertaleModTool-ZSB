@@ -106,7 +106,12 @@ public class Patcher
     public Patcher(string dataFilePath, string translateFilePath, string fontPath)
     {
         Console.WriteLine("원본파일 읽는중...");
+ 
         this.Data = ReadDataFile(new FileInfo(dataFilePath));
+        Console.WriteLine($@"
+DatafilePath : {dataFilePath}
+FileInfo : {new FileInfo(dataFilePath).FullName}
+");
 
         Data.Fonts.ToList().ForEach(x =>
         {
