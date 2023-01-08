@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 using UndertaleModLib;
 
 public static class Program
@@ -63,14 +65,48 @@ public static class Program
         }
 #endif
     }
+
+    static bool CheckSum()
+    {
+        var checkSumData = new FileInfo("./localization/checksum.bin");
+        if (checkSumData.Exists == false)
+        {
+            System.IO.File.WriteAllText("./localization/checksum.bin", SHA256CheckSum(LocalePath), Encoding.UTF8);
+            return false;
+        }
+        else
+        {
+            var saved = System.IO.File.ReadAllText(checkSumData.FullName, Encoding.UTF8);
+            var current = SHA256CheckSum(LocalePath);
+            if (saved == current) return true;
+        }
+        System.IO.File.WriteAllText("./localization/checksum.bin", SHA256CheckSum(LocalePath), Encoding.UTF8);
+        return false;
+    }
+
+    static string SHA256CheckSum(string filePath)
+    {
+        using (SHA256 SHA256 = SHA256Managed.Create())
+        {
+            using (FileStream fileStream = File.OpenRead(filePath))
+                return Convert.ToBase64String(SHA256.ComputeHash(fileStream));
+        }
+    }
+
+
     static void Main(string[] args)
     { 
         GameRootPath = AppDomain.CurrentDomain.BaseDirectory;
-        DownloadLatestData();  
-        var patcher = new Patcher(OriginalDataPath, LocalePath, LocaleFontDirectoryPath);
-        patcher.ApplyTranslate()
-            .ApplyFont()
-            .Save(MutatedDataPath); 
+        DownloadLatestData();
+        if (CheckSum() == false)
+        {
+            Console.WriteLine("번역파일 갱신에따른 데이터 생성필요");
+            var patcher = new Patcher(OriginalDataPath, LocalePath, LocaleFontDirectoryPath);
+            patcher.ApplyTranslate()
+                .ApplyFont()
+                .Save(MutatedDataPath);
+        } 
+        
         Process.Start(GameExePath, GameArgs);
     } 
 

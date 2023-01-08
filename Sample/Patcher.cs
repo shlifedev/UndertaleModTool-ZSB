@@ -129,11 +129,11 @@ public class Patcher
 
         // 데이터 불러오기
         this.Data = ReadDataFile(new FileInfo(dataFilePath));  
-        Console.WriteLine("게임 내 폰트 이름과 폰트 사이즈를 출력합니다.");
-        Data.Fonts.ToList().ForEach(x =>
-        {
-            Console.WriteLine(x.Name + "," + x.EmSize);
-        });
+        //Console.WriteLine("게임 내 폰트 이름과 폰트 사이즈를 출력합니다.");
+        //Data.Fonts.ToList().ForEach(x =>
+        //{
+        //    Console.WriteLine(x.Name + "," + x.EmSize);
+        //});
          
 
         Console.WriteLine("번역파일을 불러오고 있습니다."); 
@@ -169,7 +169,7 @@ public class Patcher
 
     public Patcher ApplyTranslate()
     {
-        Console.WriteLine("불러온 번역데이터를 게임컨텐츠에 수정중..");
+        Console.WriteLine("불러온 번역데이터를 게임컨텐츠에 적용중");
         foreach (var localString in Data.Strings)
         {
             // 로컬 스트링의 해시를 읽는다.
@@ -334,7 +334,7 @@ public class Patcher
             }
             else
             {
-                Console.WriteLine($"{font.Name.Content} 폰트가 없으므로 기본 나눔고딕 폰트 불러옴");
+                //Console.WriteLine($"{font.Name.Content} 폰트가 없으므로 기본 나눔고딕 폰트 불러옴");
                 ChangeFont(font.Name.Content, "default_nanumgothic");
             }
         } 
@@ -344,15 +344,17 @@ public class Patcher
 
     public Patcher Save(string path)
     {
-        Console.WriteLine("새로운 바이너리로 저장중..");
+        Console.WriteLine("번역 적용을 위해 저장중..");
         var fi = new FileInfo(path);
         if (fi.Exists) fi.Delete();
 
         using FileStream fs = new FileInfo(path).OpenWrite();
         UndertaleIO.Write(fs, Data);
+         
         return this;
     }
 
+   
 
     string CreateMD5(string input)
     {
