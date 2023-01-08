@@ -255,9 +255,9 @@ public class Patcher
     private void ChangeFont(string originalFontName, string fontName)
     {
         var font = Data.Fonts.Where(x => x.Name.Content == originalFontName).FirstOrDefault();
-
+        if (font == null) throw new Exception(originalFontName + " 게임내에서 폰트를 찾을 수 없음.");
         var fontData = LoadFontData(fontName);
-        var texture = LoadFontTexture(fontName);
+        var texture  = LoadFontTexture(fontName);
 
         font.Texture = texture;
         font.Glyphs.Clear();
@@ -321,13 +321,23 @@ public class Patcher
             font.Glyphs.Add(glyph);
     }
     public Patcher ApplyFont()
-    { 
+    {
+        var fontDi = new System.IO.DirectoryInfo(FontPath);
+        var fonts = fontDi.GetFiles("*.yy");
         foreach (var font in Data.Fonts)
-        { 
-                ChangeFont(font.Name.Content, "font_main_menu"); 
-        }
-
-
+        {
+            var convertableFont = fonts.Where(x => x.Name.Contains(font.Name.Content)).FirstOrDefault();
+            if (convertableFont != null)
+            {
+                Console.WriteLine("폰트를 불러오는데 성공했습니다. =>" + convertableFont.Name);
+                ChangeFont(font.Name.Content, convertableFont.Name.Split('.')[0]);
+            }
+            else
+            {
+                Console.WriteLine($"{font.Name.Content} 폰트가 없으므로 기본 나눔고딕 폰트 불러옴");
+                ChangeFont(font.Name.Content, "default_nanumgothic");
+            }
+        } 
         return this;
     }
     public Patcher End() => this;
