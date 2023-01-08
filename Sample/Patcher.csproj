@@ -1,5 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk"> 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -9,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings> 
     <Nullable>enable</Nullable>
     <PublishReadyToRun>true</PublishReadyToRun>
+    <Configurations>Debug;Release;Publish</Configurations> 
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +19,7 @@
     <ProjectReference Include="..\UndertaleModLib\UndertaleModLib.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup> 
     <Folder Include="localization\" />
   </ItemGroup>
 
