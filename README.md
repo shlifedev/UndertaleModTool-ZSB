@@ -12,14 +12,13 @@
 
 ### 번역에 참여하고 싶어요 
 - [시트](https://docs.google.com/spreadsheets/d/1w2JjxpPBwynLhu69edHGjCwjLX0muLK1cXzwzj8Sfrc/edit#gid=360281631)에 셀 캡션으로 달아주시면
-취합하겠습니다. 
+일정 주기마다 취합하겠습니다. 
 
 ### 폰트를 변경하고 싶어요
-ZeroSievert 에는 2023.1.09 기준 아래와 같은 폰트들이 있습니다.   
-GMS로 만든 폰트(png, yy)파일을 아래 테이블을 참고해서 파일명을 지정한 후  
-`localization/font` 경로에 넣기만하면 알아서 불러옵니다.  
-폰트가 없는경우 `default_nanumgothic` 폰트를 불러옵니다.  
+[게임메이커 폰트 만들기](https://www.youtube.com/watch?v=QIfgwtgSl4s&ab_channel=1upIndie)
+참고해서 폰트를 생성하고 `localization/font` 경로에 넣기만 하면 알아서 불러옵니다.  
 
+ZeroSievert 에는 2023.1.09 기준 아래와 같은 폰트들이 있습니다. 파일명을 같게 만들면 됩니다.
 예쁜 폰트를 적용하는데 성공하신경우 저에게 공유해주시면 릴리즈에 포함하겠습니다!
 | 게임폰트 파일명  | font size(em) |
 | ------------- | ------------- |
@@ -33,13 +32,9 @@ GMS로 만든 폰트(png, yy)파일을 아래 테이블을 참고해서 파일�
 | font_munro_24  | 24 |
 | font_credits_big  | 16  |
 | font_credits_small  | 8  |
- 
-
-## 해야 할 일 
-- 폰트 출력 안정화 
+  
 
 ## 주의사항
- 현재 세이브파일 데이터를 보면 번역된 데이터 기준으로 아이템 정보나 키바인딩 등이 세팅됨
- 특정 번역이 바뀌면 특정 정보가 소실될 수 있는데 하드코딩된 부분들이라 어쩔 수 없는듯 합니다.   
+ **꼭! 세이브 백업을 잘 해두세용. 사용에따른 문제는 책임지지 않습니다. **
+
  
- 세이브 번역 잘 해두세용
