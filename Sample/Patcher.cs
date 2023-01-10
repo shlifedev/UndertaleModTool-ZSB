@@ -122,6 +122,9 @@ public class Patcher
     /// <exception cref="Exception"></exception>
     public Patcher(string dataFilePath, string translateFilePath, string fontPath)
     {
+        var data = InIParser.GetAllString();
+        foreach (var d in data)
+            Console.WriteLine($"{d} {CreateMD5(d)}");
         Console.WriteLine("원본파일 읽는중...");
          
         TranslateFilePath = translateFilePath;
