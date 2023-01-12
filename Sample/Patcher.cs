@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
@@ -81,38 +82,51 @@ public class Patcher
             str.Content.Equals("Inventory") == false
         );
     }
-
+     
     /// <summary>
     /// 게임 스트링 모두 출력(저장)
-    /// </summary>
+    /// </summary>  
     /// <param name="savePath"></param>
+    /// <param name="migrationLocalePath"></param>
     /// <returns></returns>
-    public Patcher ExportStrings(string savePath)
+    public Patcher ExportStrings(string savePath, string migrationLocalePath = null)
     {
-        List<GameString> strings = new List<GameString>();
+
+        HashSet<string> hash = new HashSet<string>();
+        List<GameString> strings = new List<GameString>(); 
+        var fi = new System.IO.FileInfo(migrationLocalePath);
+        if (fi.Exists)
+        {
+            var localeContent = System.IO.File.ReadAllText(fi.FullName);
+            var list = JsonConvert.DeserializeObject<List<GameString>>(localeContent);
+            if (list != null)
+            {
+                Console.WriteLine("마이그레이션 Locale 불러옴");
+                strings.AddRange(list);
+
+                list.Select(x => x.hash)
+                    .ToList()
+                    .ForEach(x => hash.Add(x));
+            }
+        }
+
         foreach (var str in Data.Strings)
         {
-            if (IsMaybePureString(str))
+            var createHash = CreateMD5(str.Content);
+
+            if (IsMaybePureString(str) && !hash.Contains(createHash))
             {
-                var data = new GameString(CreateMD5(str.Content), str.Content, str.Content, str.Content);
+                var data = new GameString(createHash, str.Content, str.Content, str.Content);
                 strings.Add(data);
             }
         }
-        var content = JsonConvert.SerializeObject(strings);
+
+        var content = JsonConvert.SerializeObject(strings, Formatting.Indented); 
         System.IO.File.WriteAllText(savePath, content);
         return this;
     }
 
-
-    /// <summary>
-    /// 추후 게임 버전이 올라가면 원본 스트링과 최신 스트링을 비교해서
-    /// 번역시트를 업데이트 해야하기에 필요시 구현
-    /// </summary> 
-    public List<GameString> Migration(string originalLocalePath, string latestLocalePath)
-    {
-        throw new NotImplementedException();
-    }
-
+     
     /// <summary>
     /// 패쳐 생성
     /// </summary>

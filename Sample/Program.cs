@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using UndertaleModLib;
+using static UndertaleModLib.Compiler.Compiler.AssemblyWriter;
 
 public static class Program
 {
@@ -69,9 +70,9 @@ public static class Program
         {
             Console.WriteLine("최신 데이터 다운로드 실패");
         }
+#endif
 
         return null;
-#endif
     }
 
     static bool CheckSum()
@@ -113,6 +114,7 @@ public static class Program
         {
             Console.WriteLine("번역파일 갱신에따른 데이터 생성필요");
             var patcher = new Patcher(OriginalDataPath, LocalePath, LocaleFontDirectoryPath);
+  
             patcher.ApplyTranslate()
                 .ApplyFont()
                 .Save(MutatedDataPath);
@@ -121,6 +123,11 @@ public static class Program
         }
         else
         {
+#if !RELEASE
+            var patcher = new Patcher(OriginalDataPath, LocalePath, LocaleFontDirectoryPath);
+            patcher.ExportStrings("./localization/debug/migration.json", LocalePath);
+#endif
+
             Console.WriteLine("갱신 할 번역데이터가 없습니다. 게임을 실행합니다.");
             Process.Start(GameExePath, GameArgs);
         }

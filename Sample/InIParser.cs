@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+/// <summary>
+/// 시버트 세이브파일 파싱용
+/// </summary>
 public class InI
 {
     public List<InIGroup> groups;
