@@ -13,11 +13,14 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3
     
-    - name: setup .net
+    - name: SetUp DotNet
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
         
+    - name: SetUp zip
+      run: sudo apt-get install -y zip
+    
     - name: Restore dependencies
       run: dotnet restore
       
@@ -32,7 +35,18 @@ jobs:
         url : https://script.google.com/macros/s/AKfycbzCz_GcTuC8opbyIAXIwcufljtYRVZx2lHTfCNAIx0AtuZoNwNLnIw5hv9Ov56o8WjFsw/exec
         method : 'GET'
     
-    - name: Show Response
+    - name: Show Response (디버깅)
       run: |
-        echo ${{ steps.localization.outputs.response }}
-        echo ${{ steps.localization.outputs.headers }} 
+        echo ${{ steps.localization.outputs.response }} 
+        ls
+        echo ${{ steps.localization.outputs.response }} > ./publish/localization/data.json
+     
+    - name: Zip
+      run : zip -r -q Release.zip ./publish
+    
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: Release.zip
+        token : ${{secrets.CUSTOM_GITHUB_TOKEN}}
