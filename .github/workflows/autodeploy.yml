@@ -38,8 +38,9 @@ jobs:
     
     - name: Show Response (디버깅)
       run: |
+        echo 다운로드한 번역내용을 출력합니다
         echo ${{ steps.localization.outputs.response }} 
-        ls
+        echo 번역파일을 씁니다.
         echo ${{ steps.localization.outputs.response }} > ./publish/localization/data.json
      
     - name: Zip
