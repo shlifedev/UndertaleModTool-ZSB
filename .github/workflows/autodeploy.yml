@@ -34,6 +34,7 @@ jobs:
       with:
         url : https://script.google.com/macros/s/AKfycbzCz_GcTuC8opbyIAXIwcufljtYRVZx2lHTfCNAIx0AtuZoNwNLnIw5hv9Ov56o8WjFsw/exec
         method : 'GET'
+        timeout : 300000
     
     - name: Show Response (디버깅)
       run: |
