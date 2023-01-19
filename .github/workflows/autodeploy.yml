@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 6.0.x
         
     - name: SetUp zip
-      run: sudo apt-get install -y zip
+      run: apt-get install -y zip
     
     - name: Restore dependencies
       run: dotnet restore
