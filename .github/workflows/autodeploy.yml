@@ -1,0 +1,38 @@
+name : auto
+
+on:
+  schedule:
+    cron: '0 0 * * *'
+  push:
+    branches: ['master']
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps :
+    - name: checkout
+      uses: actions/checkout@v3
+    
+    - name: setup .net
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+    
+      run: dotnet publish Sample -c Release --self-contained -r "win10-x64" -p:PublishSingleFile=true -o "./publish" 
+ 
+    - name: Request Json
+      uses: fjogeleit/http-request-action@v1
+      id: localization
+      with:
+        url : https://script.google.com/macros/s/AKfycbwnWcv0kLXjVDo5pZMKr_UdwsiIBpjYoeL_1S4T2trQJAFYrUgXrMBaXX0hCSvRdhOnmg/exec
+        method : 'GET'
+    
+    - name: Show Response
+      run: |
+      echo ${{ steps.localization.outputs.response }}
+      echo ${{ steps.localization.outputs.headers }} 
