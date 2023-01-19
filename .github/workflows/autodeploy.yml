@@ -29,7 +29,7 @@ jobs:
       uses: fjogeleit/http-request-action@v1
       id: localization
       with:
-        url : https://script.google.com/macros/s/AKfycbwnWcv0kLXjVDo5pZMKr_UdwsiIBpjYoeL_1S4T2trQJAFYrUgXrMBaXX0hCSvRdhOnmg/exec
+        url : https://script.google.com/macros/s/AKfycbzCz_GcTuC8opbyIAXIwcufljtYRVZx2lHTfCNAIx0AtuZoNwNLnIw5hv9Ov56o8WjFsw/exec
         method : 'GET'
     
     - name: Show Response
