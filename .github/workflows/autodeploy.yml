@@ -6,7 +6,7 @@ on:
   push:
     branches: ['master']
 
-jobs:
+jobs: 
   build:
     runs-on: windows-latest
     steps :
