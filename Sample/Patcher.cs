@@ -24,7 +24,7 @@ public class Patcher
     private Dictionary<string, GameString> _loadedLocale;
     private Dictionary<string, UndertaleTexturePageItem> _fontTextureMap = new Dictionary<string, UndertaleTexturePageItem>();
     private Dictionary<string, JObject> _fontYYInfoMap = new Dictionary<string, JObject>();
-
+    private HashSet<string> ignoreStringSet = new HashSet<string>();
     UndertaleData ReadDataFile(FileInfo datafile)
     {
         try
@@ -39,6 +39,8 @@ public class Patcher
         }
     }
     
+
+
     /// <summary>
     /// 번역데이터를 외부로 내보낼때 스트링이 순수한 번역데이터인지 확인한다.
     /// </summary> 
@@ -79,7 +81,10 @@ public class Patcher
             str.Content.StartsWith("bool") == false &&
             str.Content.StartsWith("float4") == false &&
             // Inventory는 번역시 세이브가 날아간다. 하드코딩 이슈같은데 이 스트링은 무시해야함.
-            str.Content.Equals("Inventory") == false
+            str.Content.Equals("Inventory") == false &&
+
+            // INI, 커스텀 제외목록등에 포함되는경우
+            ignoreStringSet.Contains(str.Content) == false
         );
     }
      
@@ -343,6 +348,37 @@ public class Patcher
                 ChangeFont(font.Name.Content, "default_nanumgothic");
             }
         } 
+        return this;
+    }
+
+    /// <summary>
+    /// 릴리즈에서는 현재 동작하지 않음 (세이브 호환성 문제)
+    /// </summary>
+    /// <returns></returns>
+    public Patcher ApplyIgnoreINI()
+    {
+#if RELEASE
+        var iniSettings = InIParser.GetAllString();
+        if (iniSettings.Count == 0)
+        {
+            Console.WriteLine("불러온 ini 없음");
+        }
+
+ 
+        foreach(var value in iniSettings)
+        {
+            if (ignoreStringSet.Contains(value) == false)
+            {
+                ignoreStringSet.Add(value);
+
+#if !RELEASE
+                Console.WriteLine("ignore list updated => " + value);
+#endif
+
+
+            }
+        }
+#endif
         return this;
     }
     public Patcher End() => this;

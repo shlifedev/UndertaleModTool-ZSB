@@ -57,7 +57,7 @@ public static class Program
             if (task != null)
             {
                 System.IO.File.WriteAllText(LocalePath, task);
-                Console.WriteLine("다운로드 완료\n");
+                Console.WriteLine("다운로드 완료\n"); 
                 return task;
             }
             else
@@ -114,9 +114,10 @@ public static class Program
         {
             Console.WriteLine("번역파일 갱신에따른 데이터 생성필요");
             var patcher = new Patcher(OriginalDataPath, LocalePath, LocaleFontDirectoryPath);
-  
-            patcher.ApplyTranslate()
+
+            patcher.ApplyIgnoreINI() 
                 .ApplyFont()
+                .ApplyTranslate()
                 .Save(MutatedDataPath);
 
             Process.Start(GameExePath, GameArgs);

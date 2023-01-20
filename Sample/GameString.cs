@@ -13,7 +13,5 @@ public class GameString
     public string hash { get; set; }
     public string origin { get; set; }
     public string autoTranslate { get; set; }
-    public string ko { get; set; }
-
-  
+    public string ko { get; set; } 
 } 
