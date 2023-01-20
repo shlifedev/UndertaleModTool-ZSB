@@ -14,7 +14,7 @@ on:
 
 env:
   version: "auto_release"
-  
+
 jobs: 
   Deploy:
     runs-on: ubuntu-latest
@@ -65,7 +65,7 @@ jobs:
       with:
         files: Release.zip
         token: ${{ secrets.TOKEN }}
-        tag_name: ${{ input.version == "" && env.version || input.version  }}
+        tag_name: ${{ inputs.version == "" && env.version || inputs.version  }}
         body: |
           # 사용방법
           `Release.zip` (혹은 `build.zip`) 게임 설치폴더에 압축 해제 후 `Patcher.exe` 를 통해 게임 실행  
