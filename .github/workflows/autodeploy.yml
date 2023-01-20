@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 0 * * *'
   push:
-    branches: ['master', 'release']
+    branches: ['release']
 
 jobs: 
   build:
@@ -58,7 +58,13 @@ jobs:
         token: ${{ secrets.TOKEN }}
         tag_name: 'v1.0.1'
         body: |
-          # Sample Text
-          salalalala
-          `abc`
-          Sample Text.
+          # 사용방법
+          build.zip 게임 설치폴더에 압축 해제 후 Patcher.exe 를 통해 게임 실행
+
+          매일 **UTC 시간 기준 0시** 에 자동으로
+          번역파일이 갱신되어 파일이 업데이트 됩니다.
+
+          새로운 번역파일을 원하시는경우
+          다시 다운로드 하시면 됩니다.
+          
+          감사합니다.
