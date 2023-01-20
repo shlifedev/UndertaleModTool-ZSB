@@ -64,9 +64,12 @@ jobs:
       uses: softprops/action-gh-release@v1  
       with:
         files: Release.zip
-        token: ${{ secrets.TOKEN }}
-        tag_name: ${{ env.releaseTag }}
+        token: ${{ secrets.TOKEN }} 
+        
         if: ${{ inputs.releaseTag != '' }}
+        tag_name: ${{ inputs.releaseTag }} 
+        
+        if: ${{ env.releaseTag != '' }}
         tag_name: ${{ inputs.releaseTag }} 
         
         body: |
