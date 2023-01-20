@@ -51,8 +51,7 @@ jobs:
       run : zip -r -q Release.zip ./publish
     
     - name: Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1 
       with:
         files: Release.zip
         token : ${{secrets.CUSTOM_GITHUB_TOKEN}}
