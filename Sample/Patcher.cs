@@ -168,19 +168,7 @@ public class Patcher
 
         // 몇 가지 예외 체크
         if (_loadedLocale.Count == 0) throw new Exception("번역 데이터 로드실패 (code 2)");
-        if (loadedGameStrings == null) throw new Exception("번역 데이터 로드실패");
-
-
-        //hashedLocalDatas = new Dictionary<string, List<UndertaleString>>();
-        //// 인게임 스트링 해쉬화 및 딕셔너리 추가
-        //foreach (var internalString in Data.Strings)
-        //{
-        //    var hash = CreateMD5(internalString.Content);
-        //    if (!hashedLocalDatas.ContainsKey(hash))
-        //        hashedLocalDatas.Add(hash, new List<UndertaleString>());
-        //    hashedLocalDatas[hash].Add(internalString);
-        //}
- 
+        if (loadedGameStrings == null) throw new Exception("번역 데이터 로드실패"); 
     }
 
 
