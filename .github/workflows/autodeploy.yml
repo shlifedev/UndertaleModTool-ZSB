@@ -51,8 +51,8 @@ jobs:
         ls
         echo 번역파일을 씁니다.
         mkdir -p ./build/localization/
-        cat >./build/localization/data.json << 'EOL'
-        ${{ steps.localization.outputs.response }} > ./build/localization/data.json
+        cat >./build/localization/data.json << 'EOL' > ./build/localization/data.json
+        ${{ steps.localization.outputs.response }}
         EOF
 
      
