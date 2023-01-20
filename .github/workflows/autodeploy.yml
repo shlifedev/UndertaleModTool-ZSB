@@ -1,13 +1,22 @@
 name : AutoDeploy
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'release version'
+        required : true
+  
   schedule:
     - cron: '0 0 * * *'
   push:
     branches: ['release']
 
+env:
+  version: "auto_release"
+  
 jobs: 
-  build:
+  Deploy:
     runs-on: ubuntu-latest
     steps :
     - name: checkout
@@ -56,7 +65,7 @@ jobs:
       with:
         files: Release.zip
         token: ${{ secrets.TOKEN }}
-        tag_name: 'v1.0.1'
+        tag_name: ${{ input.version == "" && env.version || input.version  }}
         body: |
           # 사용방법
           `Release.zip` (혹은 `build.zip`) 게임 설치폴더에 압축 해제 후 `Patcher.exe` 를 통해 게임 실행  
@@ -68,4 +77,4 @@ jobs:
           기존 세이브와 호환 문제가 있을 수 있습니다.  
           항상 백업 부탁드립니다.  
 
-          즐겜하세요.
+          즐겜하세요^^.
