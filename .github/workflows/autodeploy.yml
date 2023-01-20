@@ -8,7 +8,7 @@ on:
         required : true
   
   schedule:
-    - cron: '*/1 * * * *'
+    - cron: '*/5 * * * *'
   push:
     branches: ['release']
 
