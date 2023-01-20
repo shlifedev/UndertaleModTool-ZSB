@@ -50,8 +50,10 @@ jobs:
     - name: Zip
       run : zip -r -q Release.zip ./publish
     
-    - name: Release
+    - name: Print Secret
       run: echo ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+
+    - name: Release 
       uses: softprops/action-gh-release@v1  
       with:
         files: Release.zip
