@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 0 * * *'
   push:
-    branches: ['master']
+    branches: ['release']
 
 jobs: 
   build:
@@ -49,14 +49,26 @@ jobs:
      
     - name: Zip
       run : zip -r -q Release.zip ./publish
-    
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
+ 
+
+    - name: Release 
+      uses: softprops/action-gh-release@v1  
       with:
         files: Release.zip
-        token : ${{secrets.CUSTOM_GITHUB_TOKEN}}
-        tag_name : 'v1.0.1'
-        body : |
-          # 테스트
-          # -
+        token: ${{ secrets.TOKEN }}
+        tag_name: 'v1.0.1'
+        body: |
+          # 사용방법
+          build.zip 게임 설치폴더에 압축 해제 후 Patcher.exe 를 통해 게임 실행  
+
+          매일 **UTC 시간 기준 0시** 에 자동으로
+          번역파일이 갱신되어 파일이 업데이트 됩니다.  
+
+          새로운 번역파일을 원하시는경우
+          다시 다운로드 하시면 됩니다.  
+          
+          감사합니다.
+
+          # 주의사항
+          기존 세이브와 호환 문제가 있을 수 있습니다.  
+          항상 백업 부탁드립니다.  
