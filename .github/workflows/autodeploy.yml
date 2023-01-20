@@ -39,8 +39,10 @@ jobs:
   # 여기서 파일쓰기가 안되는 이유를 확인해야함  
     - name: Show Response (디버깅)
       run: | 
+        ls
         echo 번역파일을 씁니다.
-        echo cat >./publish/localization/data.json <<'EOL'
+        mkdir -p ./publish/localization/
+        cat >./publish/localization/data.json <<'EOL'
         ${{ steps.localization.outputs.response }} > ./publish/localization/data.json
         'EOL'
 
