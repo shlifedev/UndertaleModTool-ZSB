@@ -67,7 +67,7 @@ jobs:
         token: ${{ secrets.TOKEN }}
         tag_name: ${{ env.releaseTag }}
         if: ${{ inputs.releaseTag != '' }}
-          tag_name: ${{ inputs.releaseTag }} 
+        tag_name: ${{ inputs.releaseTag }} 
         
         body: |
           # 사용방법
