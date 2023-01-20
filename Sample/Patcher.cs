@@ -170,7 +170,7 @@ public class Patcher
         if (_loadedLocale.Count == 0) throw new Exception("번역 데이터 로드실패 (code 2)");
         if (loadedGameStrings == null) throw new Exception("번역 데이터 로드실패"); 
     }
-
+ 
 
     public Patcher ApplyTranslate()
     {
