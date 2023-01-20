@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 0 * * *'
   push:
-    branches: ['master']
+    branches: ['master', 'release']
 
 jobs: 
   build:
@@ -56,6 +56,3 @@ jobs:
         files: Release.zip
         token : ${{secrets.CUSTOM_GITHUB_TOKEN}}
         tag_name : 'v1.0.1'
-        body : |
-          # 테스트
-          # -
