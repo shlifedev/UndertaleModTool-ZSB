@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UndertaleModLib", "UndertaleModLib\UndertaleModLib.csproj", "{4781ADAC-9469-42C4-B357-4A0A157D7FCD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Patcher", "Sample\Patcher.csproj", "{70CA3FC6-E72B-4284-BB88-741486781BF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Patcher", "Patcher\Patcher.csproj", "{70CA3FC6-E72B-4284-BB88-741486781BF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

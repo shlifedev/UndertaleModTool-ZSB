@@ -35,7 +35,7 @@ jobs:
       
     - name: Build
     
-      run: dotnet publish Sample -c Release --self-contained -r "win10-x64" -p:PublishSingleFile=true -o "./build" 
+      run: dotnet publish Patcher -c Release --self-contained -r "win10-x64" -p:PublishSingleFile=true -o "./build" 
  
     - name: Request Json
       uses: fjogeleit/http-request-action@v1
@@ -69,7 +69,7 @@ jobs:
           # 사용방법
           `Release.zip` 파일을 게임 설치폴더에 압축 해제 후 `Patcher.exe` 를 통해 게임 실행  
 
-          - 매일 **UTC 시간 기준 0시** 에 자동으로 번역파일이 갱신되어 파일이 업데이트 됩니다.    
+          - 매일 **UTC 시간 기준 0시(한국 오전** 에 자동으로 번역파일이 갱신되어 파일이 업데이트 됩니다.    
           즉, 새로운 번역파일을 원하시는경우 여기에서 다시 다운로드 하시면 됩니다.  
 
           # 주의사항
