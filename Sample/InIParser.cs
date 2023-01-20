@@ -68,7 +68,10 @@ public static class InIParser
     {
         var iniDi = new System.IO.DirectoryInfo("./localization/debug/ini");
         HashSet<string> hashs = new HashSet<string>();
-        if (iniDi.Exists == false) return hashs;
+
+        if (iniDi == null || iniDi.Exists == false)
+            return hashs;
+
         iniDi.GetFiles("*.ini").ToList().ForEach(file =>
         {
             var ini = new InI(file.FullName);

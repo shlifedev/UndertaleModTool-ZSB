@@ -124,10 +124,10 @@ public static class Program
         }
         else
         {
-#if !RELEASE
-            var patcher = new Patcher(OriginalDataPath, LocalePath, LocaleFontDirectoryPath);
-            patcher.ExportStrings("./localization/debug/migration.json", LocalePath);
-#endif
+//#if !RELEASE
+//            var patcher = new Patcher(OriginalDataPath, LocalePath, LocaleFontDirectoryPath);
+//            patcher.ExportStrings("./localization/debug/migration.json", LocalePath);
+//#endif
 
             Console.WriteLine("갱신 할 번역데이터가 없습니다. 게임을 실행합니다.");
             Process.Start(GameExePath, GameArgs);
