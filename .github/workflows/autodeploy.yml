@@ -53,7 +53,6 @@ jobs:
         mkdir -p ./build/localization/
         cat >./build/localization/data.json << 'EOL'
         ${{ steps.localization.outputs.response }}
-        EOF
 
      
     - name: Zip
