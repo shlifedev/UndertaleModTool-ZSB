@@ -49,13 +49,11 @@ jobs:
      
     - name: Zip
       run : zip -r -q Release.zip ./publish
-    
-    - name: Print Secret
-      run: echo ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+ 
 
     - name: Release 
       uses: softprops/action-gh-release@v1  
       with:
         files: Release.zip
-        token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+        token: ${{ secrets.TOKEN }}
         tag_name: 'v1.0.1'
