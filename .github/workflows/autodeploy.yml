@@ -52,7 +52,7 @@ jobs:
     
     - name: Release
       uses: softprops/action-gh-release@v1 
-      echo: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+      run: echo ${{ secrets.CUSTOM_GITHUB_TOKEN }}
       with:
         files: Release.zip
         token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
