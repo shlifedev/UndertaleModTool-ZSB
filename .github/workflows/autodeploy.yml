@@ -57,3 +57,8 @@ jobs:
         files: Release.zip
         token: ${{ secrets.TOKEN }}
         tag_name: 'v1.0.1'
+        body: |
+          # Sample Text
+          salalalala
+          `abc`
+          Sample Text.
