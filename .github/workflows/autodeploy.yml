@@ -52,7 +52,8 @@ jobs:
     
     - name: Release
       uses: softprops/action-gh-release@v1 
+      echo: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
       with:
         files: Release.zip
-        token : ${{secrets.CUSTOM_GITHUB_TOKEN}}
-        tag_name : 'v1.0.1'
+        token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+        tag_name: 'v1.0.1'
