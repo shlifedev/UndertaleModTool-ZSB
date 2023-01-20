@@ -1,11 +1,11 @@
 # 제로시버트 한글패치
-[언더테일 모드툴](https://github.com/krzys-h/UndertaleModTool) 기반으로 작성된 한글패쳐, 
-매일밤 UTC 0시 혹은 릴리즈 푸시마다 번역파일 갱신후 릴리즈 됩니다.
+[언더테일 모드툴](https://github.com/krzys-h/UndertaleModTool) 기반으로 작성된 한글패쳐.  
+30분마다 번역파일 갱신후 릴리즈 됩니다.
 <p align="center">
  <img src=https://github.com/shlifedev/zero-sievert-localization/actions/workflows/autodeploy.yml/badge.svg/> 
 </p> 
 <p align="center">
- <img width="400px" src=https://user-images.githubusercontent.com/49047211/211140923-dc7e57d7-4462-451f-b88d-28440b2fe79f.png> 
+ <img width="600px" src=https://user-images.githubusercontent.com/49047211/211140923-dc7e57d7-4462-451f-b88d-28440b2fe79f.png> 
 </p> 
 
 # 적용법 
