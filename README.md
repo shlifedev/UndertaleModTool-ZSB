@@ -5,7 +5,7 @@
  <img src=https://github.com/shlifedev/zero-sievert-localization/actions/workflows/autodeploy.yml/badge.svg/> 
 </p> 
 <p align="center">
- <img width="400px" src=https://user-images.githubusercontent.com/49047211/211140923-dc7e57d7-4462-451f-b88d-28440b2fe79f.png> 
+ <img width="600px" src=https://user-images.githubusercontent.com/49047211/211140923-dc7e57d7-4462-451f-b88d-28440b2fe79f.png> 
 </p> 
 
 # 적용법 
