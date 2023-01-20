@@ -35,7 +35,7 @@ jobs:
       
     - name: Build
     
-      run: dotnet publish Sample -c Release --self-contained -r "win10-x64" -p:PublishSingleFile=true -o "./publish" 
+      run: dotnet publish Sample -c Release --self-contained -r "win10-x64" -p:PublishSingleFile=true -o "./build" 
  
     - name: Request Json
       uses: fjogeleit/http-request-action@v1
@@ -50,13 +50,13 @@ jobs:
       run: | 
         ls
         echo 번역파일을 씁니다.
-        mkdir -p ./publish/localization/
-        cat >./publish/localization/data.json <<
-        ${{ steps.localization.outputs.response }} > ./publish/localization/data.json
+        mkdir -p ./build/localization/
+        cat >./build/localization/data.json <<
+        ${{ steps.localization.outputs.response }} > ./build/localization/data.json
 
      
     - name: Zip
-      run : zip -r -q Release.zip ./publish
+      run : zip -r -q Release.zip ./build
  
 
     - name: Release 
