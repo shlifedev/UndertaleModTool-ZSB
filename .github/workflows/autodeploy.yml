@@ -1,4 +1,4 @@
-name : auto
+name : AutoDeploy
 
 on:
   schedule:
@@ -8,7 +8,7 @@ on:
 
 jobs: 
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps :
     - name: checkout
       uses: actions/checkout@v3
@@ -35,14 +35,13 @@ jobs:
         url : https://script.google.com/macros/s/AKfycbzCz_GcTuC8opbyIAXIwcufljtYRVZx2lHTfCNAIx0AtuZoNwNLnIw5hv9Ov56o8WjFsw/exec
         method : 'GET'
         timeout : 300000
-    
-    - name: Wrtie File
+
+  # 여기서 파일쓰기가 안되는 이유를 확인해야함  
+    - name: Show Response (디버깅)
       run: | 
         echo 번역파일을 씁니다.
-        echo cat >./publish/localization/data.json <<'EOL'
-        ${{ steps.localization.outputs.response }} > ./publish/localization/data.json
-        'EOL'
-
+        echo ${{ steps.localization.outputs.response }} > ./publish/localization/data.json
+     
     - name: Zip
       run : zip -r -q Release.zip ./publish
     
