@@ -36,11 +36,13 @@ jobs:
         method : 'GET'
         timeout : 300000
     
-    - name: Show Response (디버깅)
+    - name: Wrtie File
       run: | 
         echo 번역파일을 씁니다.
-        echo ${{ steps.localization.outputs.response }} > ./publish/localization/data.json | base64
-     
+        echo cat >./publish/localization/data.json <<'EOL'
+        ${{ steps.localization.outputs.response }} > ./publish/localization/data.json
+        'EOL'
+
     - name: Zip
       run : zip -r -q Release.zip ./publish
     
