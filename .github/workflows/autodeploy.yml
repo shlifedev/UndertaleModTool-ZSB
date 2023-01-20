@@ -3,8 +3,8 @@ name : AutoDeploy
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'release version'
+      releaseTag:
+        description: '태그명'
         required : true
   
   schedule:
@@ -13,7 +13,7 @@ on:
     branches: ['release']
 
 env:
-  version: "auto_release"
+  releaseTag: "auto_release"
 
 jobs: 
   Deploy:
@@ -65,7 +65,7 @@ jobs:
       with:
         files: Release.zip
         token: ${{ secrets.TOKEN }}
-        tag_name: ${{ inputs.version && env.version || inputs.version  }}
+        tag_name: ${{ inputs.releaseTag && env.releaseTag || inputs.releaseTag  }}
         body: |
           # 사용방법
           `Release.zip` (혹은 `build.zip`) 게임 설치폴더에 압축 해제 후 `Patcher.exe` 를 통해 게임 실행  
