@@ -8,7 +8,7 @@ using UndertaleModLib;
 using UndertaleModLib.Models;
 
 public class Patcher
-{ 
+{
     ///// <summary>
     ///// 중복 스트링이 있을 수 있으므로 리스트로 관리한다.
     ///// </summary>
@@ -38,56 +38,56 @@ public class Patcher
             throw new FileNotFoundException($"Data file '{e.FileName}' does not exist");
         }
     }
-    
+
 
 
     /// <summary>
     /// 번역데이터를 외부로 내보낼때 스트링이 순수한 번역데이터인지 확인한다.
     /// </summary> 
-    bool IsMaybePureString(UndertaleString str)
+    bool IsMaybePureString(string str)
     {
 
         return (
-            Data.AudioGroups.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Backgrounds.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Sounds.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Shaders.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Sprites.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.EmbeddedTextures.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.TextureGroupInfo.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.TexturePageItems.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Fonts.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Timelines.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.GameObjects.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Paths.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Code.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Functions.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.EmbeddedAudio.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.CodeLocals.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Functions.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Rooms.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Variables.Where(x => x.Name == str).FirstOrDefault() == null &&
-            Data.Extensions.Where(x => x.Name == str).FirstOrDefault() == null &&
+            Data.AudioGroups.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Backgrounds.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Sounds.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Shaders.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Sprites.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.EmbeddedTextures.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.TextureGroupInfo.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.TexturePageItems.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Fonts.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Timelines.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.GameObjects.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Paths.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Code.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Functions.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.EmbeddedAudio.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.CodeLocals.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Functions.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Rooms.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Variables.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
+            Data.Extensions.Where(x => x.Name.Content == str).FirstOrDefault() == null &&
             // 임시 처리, 사실상 소문자 스트링은 번역에서 걸러내도 될 것 같음
-            str.Content.StartsWith("#define") == false &&
-            str.Content.Contains("#define") == false &&
-            str.Content.Contains("obj_map") == false &&
-            str.Content.Contains("tilemap_set") == false &&
-            str.Content.StartsWith("precision mediump") == false &&
-            str.Content.StartsWith("void main()") == false &&
-            str.Content.StartsWith("scr_") == false &&
-            str.Content.StartsWith("ga_") == false &&
-            str.Content.StartsWith("gm_") == false &&
-            str.Content.StartsWith("bool") == false &&
-            str.Content.StartsWith("float4") == false &&
+            str.StartsWith("#define") == false &&
+            str.Contains("#define") == false &&
+            str.Contains("obj_map") == false &&
+            str.Contains("tilemap_set") == false &&
+            str.StartsWith("precision mediump") == false &&
+            str.StartsWith("void main()") == false &&
+            str.StartsWith("scr_") == false &&
+            str.StartsWith("ga_") == false &&
+            str.StartsWith("gm_") == false &&
+            str.StartsWith("bool") == false &&
+            str.StartsWith("float4") == false &&
             // Inventory는 번역시 세이브가 날아간다. 하드코딩 이슈같은데 이 스트링은 무시해야함.
-            str.Content.Equals("Inventory") == false &&
+            str.Equals("Inventory") == false &&
 
             // INI, 커스텀 제외목록등에 포함되는경우
-            ignoreStringSet.Contains(str.Content) == false
+            ignoreStringSet.Contains(str) == false
         );
     }
-     
+
     /// <summary>
     /// 게임 스트링 모두 출력(저장)
     /// </summary>  
@@ -98,20 +98,22 @@ public class Patcher
     {
 
         HashSet<string> hash = new HashSet<string>();
-        List<GameString> strings = new List<GameString>(); 
+        List<GameString> strings = new List<GameString>();
         var fi = new System.IO.FileInfo(migrationLocalePath);
         if (fi.Exists)
         {
             var localeContent = System.IO.File.ReadAllText(fi.FullName);
             var list = JsonConvert.DeserializeObject<List<GameString>>(localeContent);
             if (list != null)
-            {
-                Console.WriteLine("마이그레이션 Locale 불러옴");
-                strings.AddRange(list);
-
-                list.Select(x => x.hash)
-                    .ToList()
-                    .ForEach(x => hash.Add(x));
+            { 
+                list.ForEach(x =>
+                    {
+                        if (!hash.Contains(x.hash) && IsMaybePureString(x.origin))
+                        {
+                            hash.Add(x.hash);
+                            strings.Add(x);
+                        }
+                    });
             }
         }
 
@@ -119,19 +121,19 @@ public class Patcher
         {
             var createHash = CreateMD5(str.Content);
 
-            if (IsMaybePureString(str) && !hash.Contains(createHash))
+            if (IsMaybePureString(str.Content) && !hash.Contains(createHash))
             {
-                var data = new GameString(createHash, str.Content, str.Content, str.Content);
+                var data = new GameString(createHash, str.Content, null, str.Content);
                 strings.Add(data);
             }
         }
 
-        var content = JsonConvert.SerializeObject(strings, Formatting.Indented); 
+        var content = JsonConvert.SerializeObject(strings, Formatting.Indented);
         System.IO.File.WriteAllText(savePath, content);
         return this;
     }
 
-     
+
     /// <summary>
     /// 패쳐 생성
     /// </summary>
@@ -145,37 +147,37 @@ public class Patcher
         foreach (var d in data)
             Console.WriteLine($"{d} {CreateMD5(d)}");
         Console.WriteLine("원본파일 읽는중...");
-         
+
         TranslateFilePath = translateFilePath;
         FontPath = fontPath;
 
         // 데이터 불러오기
-        this.Data = ReadDataFile(new FileInfo(dataFilePath));  
+        this.Data = ReadDataFile(new FileInfo(dataFilePath));
         //Console.WriteLine("게임 내 폰트 이름과 폰트 사이즈를 출력합니다.");
         //Data.Fonts.ToList().ForEach(x =>
         //{
         //    Console.WriteLine(x.Name + "," + x.EmSize);
         //});
-         
 
-        Console.WriteLine("번역파일을 불러오고 있습니다."); 
+
+        Console.WriteLine("번역파일을 불러오고 있습니다.");
         // 번역 파일 로드 (data.json)
         var content = System.IO.File.ReadAllText(translateFilePath);
         var loadedGameStrings = JsonConvert.DeserializeObject<List<GameString>>(content);
         _loadedLocale = new Dictionary<string, GameString>();
 
         // 로드된 번역파일 데이터에 추가 
-        if (loadedGameStrings != null) 
-            foreach (var str in loadedGameStrings) 
-                if (str.hash != null && !_loadedLocale.ContainsKey(str.hash)) 
-                    _loadedLocale.Add(str.hash, str);  
+        if (loadedGameStrings != null)
+            foreach (var str in loadedGameStrings)
+                if (str.hash != null && !_loadedLocale.ContainsKey(str.hash))
+                    _loadedLocale.Add(str.hash, str);
 
 
         // 몇 가지 예외 체크
         if (_loadedLocale.Count == 0) throw new Exception("번역 데이터 로드실패 (code 2)");
-        if (loadedGameStrings == null) throw new Exception("번역 데이터 로드실패"); 
+        if (loadedGameStrings == null) throw new Exception("번역 데이터 로드실패");
     }
- 
+
 
     public Patcher ApplyTranslate()
     {
@@ -194,7 +196,7 @@ public class Patcher
 
                 // 불러오는데 시간이 좀 더 걸려도 그렇게 느리진 않을거같고 번역시트상 데이터 자체가 잘못되어 있을 수 있으니
                 // 순수 스트링 검사를 한번 수행하는게 좋을 듯.
-                if (IsMaybePureString(localString))
+                if (IsMaybePureString(localString.Content))
                 {
                     localString.Content = content;
                 }
@@ -267,16 +269,16 @@ public class Patcher
         var font = Data.Fonts.Where(x => x.Name.Content == originalFontName).FirstOrDefault();
         if (font == null) throw new Exception(originalFontName + " 게임내에서 폰트를 찾을 수 없음.");
         var fontData = LoadFontData(fontName);
-        var texture  = LoadFontTexture(fontName);
+        var texture = LoadFontTexture(fontName);
 
         font.Texture = texture;
         font.Glyphs.Clear();
-        font.DisplayName = Data.Strings.MakeString((string)fontData["fontName"]); 
+        font.DisplayName = Data.Strings.MakeString((string)fontData["fontName"]);
         font.Bold = (bool)fontData["bold"];
         font.Italic = (bool)fontData["italic"];
         font.Charset = (byte)fontData["charset"];
         font.AntiAliasing = (byte)fontData["AntiAlias"];
-       
+
         if (fontData.ContainsKey("ascender"))
             font.Ascender = (uint)fontData["ascender"];
         if (fontData.ContainsKey("ascenderOffset"))
@@ -326,7 +328,7 @@ public class Patcher
         // Sort glyphs like in UndertaleFontEditor to be safe
         glyphs.Sort((x, y) => x.Character.CompareTo(y.Character));
         font.Glyphs.Clear();
-         
+
         foreach (UndertaleFont.Glyph glyph in glyphs)
             font.Glyphs.Add(glyph);
     }
@@ -347,7 +349,7 @@ public class Patcher
                 //Console.WriteLine($"{font.Name.Content} 폰트가 없으므로 기본 나눔고딕 폰트 불러옴");
                 ChangeFont(font.Name.Content, "default_nanumgothic");
             }
-        } 
+        }
         return this;
     }
 
@@ -391,11 +393,11 @@ public class Patcher
 
         using FileStream fs = new FileInfo(path).OpenWrite();
         UndertaleIO.Write(fs, Data);
-         
+
         return this;
     }
 
-   
+
 
     string CreateMD5(string input)
     {
