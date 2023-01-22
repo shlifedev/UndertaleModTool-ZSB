@@ -93,6 +93,11 @@ public static class Program
         return false;
     }
 
+    static bool GameDataIsValid()
+    {
+        return new System.IO.FileInfo(MutatedDataPath).Exists;
+    }
+
     static string SHA256CheckSum(string filePath)
     {
         using (SHA256 SHA256 = SHA256Managed.Create())
@@ -102,9 +107,30 @@ public static class Program
         }
     }
 
+    private static void CopyFilesRecursively(string sourcePath, string targetPath)
+    { 
+        foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories)) 
+            Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));  
+        foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories)) 
+            File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true); 
+    }
+    static void SaveBackUp()
+    {
+        var savePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/ZERO_Sievert";
+        var di = new DirectoryInfo(savePath);
+        var target = "./localization/debug/backup/" + DateTime.Now.ToString("yyyy-M-dd-hh-mm");
 
+        if (Directory.Exists(target) == false)
+            Directory.CreateDirectory(target);
+
+        CopyFilesRecursively(di.FullName, target);
+        var localization = new FileInfo("./localization/data.json");
+        if (localization.Exists) 
+            localization.CopyTo(Path.Combine(target, localization.Name)); 
+    }
     static void Main(string[] args)
     { 
+        SaveBackUp();  
         var task = Task.Run(async () => {
              await DownloadLatestData();
          });

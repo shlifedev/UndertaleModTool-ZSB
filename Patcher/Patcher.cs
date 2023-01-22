@@ -29,6 +29,8 @@ public class Patcher
     {
         try
         {
+
+
             using FileStream fs = datafile.OpenRead();
             UndertaleData gmData = UndertaleIO.Read(fs);
             return gmData;
@@ -142,23 +144,14 @@ public class Patcher
     /// <param name="fontPath">폰트 파일의 절대 경로 (폴더 위치)</param>
     /// <exception cref="Exception"></exception>
     public Patcher(string dataFilePath, string translateFilePath, string fontPath)
-    {
-        var data = InIParser.GetAllString();
-        foreach (var d in data)
-            Console.WriteLine($"{d} {CreateMD5(d)}");
+    {   
         Console.WriteLine("원본파일 읽는중...");
 
         TranslateFilePath = translateFilePath;
         FontPath = fontPath;
 
         // 데이터 불러오기
-        this.Data = ReadDataFile(new FileInfo(dataFilePath));
-        //Console.WriteLine("게임 내 폰트 이름과 폰트 사이즈를 출력합니다.");
-        //Data.Fonts.ToList().ForEach(x =>
-        //{
-        //    Console.WriteLine(x.Name + "," + x.EmSize);
-        //});
-
+        this.Data = ReadDataFile(new FileInfo(dataFilePath)); 
 
         Console.WriteLine("번역파일을 불러오고 있습니다.");
         // 번역 파일 로드 (data.json)
@@ -352,35 +345,18 @@ public class Patcher
         }
         return this;
     }
-
-    /// <summary>
-    /// 릴리즈에서는 현재 동작하지 않음 (세이브 호환성 문제)
-    /// </summary>
-    /// <returns></returns>
+ 
     public Patcher ApplyIgnoreINI()
     {
-#if RELEASE
-        var iniSettings = InIParser.GetAllString();
-        if (iniSettings.Count == 0)
-        {
-            Console.WriteLine("불러온 ini 없음");
-        }
-
- 
-        foreach(var value in iniSettings)
-        {
-            if (ignoreStringSet.Contains(value) == false)
-            {
-                ignoreStringSet.Add(value);
-
-#if !RELEASE
-                Console.WriteLine("ignore list updated => " + value);
-#endif
-
-
-            }
-        }
-#endif
+        //var iniSettings = InIParser.GetAllSettingKeyValues();
+        //foreach (var value in iniSettings)
+        //{
+        //    if (ignoreStringSet.Contains(value) == false)
+        //    {
+        //        ignoreStringSet.Add(value); 
+        //        Console.WriteLine("ignore list updated => " + value);  
+        //    }
+        //} 
         return this;
     }
     public Patcher End() => this;

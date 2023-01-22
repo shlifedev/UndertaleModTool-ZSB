@@ -64,9 +64,10 @@ public class InIData
 }
 public static class InIParser
 {
-    public static HashSet<string> GetAllString()
+    public static HashSet<string> GetAllSettingKeyValues()
     {
-        var iniDi = new System.IO.DirectoryInfo("./localization/debug/ini");
+        var savePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/ZERO_Sievert";
+        var iniDi = new System.IO.DirectoryInfo(savePath);
         HashSet<string> hashs = new HashSet<string>();
 
         if (iniDi == null || iniDi.Exists == false)

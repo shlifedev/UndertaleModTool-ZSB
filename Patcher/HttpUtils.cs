@@ -5,7 +5,7 @@ public static class HttpUtils
 {
     private static string remoteJsonUrl = "https://script.google.com/macros/s/AKfycbxRVBLdp0-fhQEcSaAH0ZzA7MpNSBXNJaIUFqRg22aL2LHW3tDCzLm9lAo5-GZYrZT39Q/exec";
 
-
+ 
     public static async Task<string> GetLatestFromSpreadSheet()
     {
         return await Get(remoteJsonUrl);
