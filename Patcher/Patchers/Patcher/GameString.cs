@@ -1,4 +1,4 @@
-﻿namespace Patcher
+﻿namespace GMSLocalization
 {
     [Serializable]
     public class GameString
