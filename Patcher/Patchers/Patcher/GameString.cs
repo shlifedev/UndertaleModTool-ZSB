@@ -1,4 +1,4 @@
-﻿namespace Patcher.Patchers.Patcher
+﻿namespace Patcher
 {
     [Serializable]
     public class GameString
