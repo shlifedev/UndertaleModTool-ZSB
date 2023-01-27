@@ -1,5 +1,6 @@
 # 제로시버트 한글패치
 [언더테일 모드툴](https://github.com/krzys-h/UndertaleModTool) 기반으로 작성된 한글패쳐.  
+이 방식으로 게임메이커로 만들어진 모든 게임의 번역을 시트로 관리할 수 있습니다.  
 30분마다 번역파일 갱신후 릴리즈 됩니다.
 <p align="center">
  <img src=https://github.com/shlifedev/zero-sievert-localization/actions/workflows/autodeploy.yml/badge.svg/> 
